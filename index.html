@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guia — Semana 22</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+  :root{
+    /* acentos fixos da marca */
+    --plum:#4A2131;
+    --vinho:#6E3B4C;
+    --rosa:#C46A85;
+    --rosa-cl:#E2A2B5;
+    --s1:#D2798F;
+    --s2:#A9556E;
+    --s3:#7A3A50;
+
+    /* superfícies e texto (tema claro) */
+    --fundo:#F7E4E9;
+    --card:#FDF4F6;
+    --bloco:#FFFFFF;
+    --tinta:#3E2029;
+    --titulo:#4A2131;
+    --suave:#A0757F;
+    --hora-bg:#F7E4E9;
+    --hora-tx:#7A3A50;
+    --painel:#4A2131;
+    --painel-tx:#FBE7EC;
+    --painel-sub:#EFCFD9;
+    --borda:rgba(160,117,127,.30);
+    --feito:#8E4C66;
+    --sombra:rgba(74,33,49,.10);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --rosa:#DE87A0;
+      --rosa-cl:#F0B7C7;
+      --s1:#E58EA6;
+      --fundo:#23141A;
+      --card:#2E1B23;
+      --bloco:#3A222C;
+      --tinta:#F2DFE5;
+      --titulo:#F6DEE6;
+      --suave:#C69EAB;
+      --hora-bg:#4A2B36;
+      --hora-tx:#F2C7D5;
+      --painel:#391E29;
+      --painel-tx:#FBE7EC;
+      --painel-sub:#E7C4D0;
+      --borda:rgba(226,162,181,.28);
+      --feito:#E9A5BA;
+      --sombra:rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --rosa:#DE87A0;
+    --rosa-cl:#F0B7C7;
+    --s1:#E58EA6;
+    --fundo:#23141A;
+    --card:#2E1B23;
+    --bloco:#3A222C;
+    --tinta:#F2DFE5;
+    --titulo:#F6DEE6;
+    --suave:#C69EAB;
+    --hora-bg:#4A2B36;
+    --hora-tx:#F2C7D5;
+    --painel:#391E29;
+    --painel-tx:#FBE7EC;
+    --painel-sub:#E7C4D0;
+    --borda:rgba(226,162,181,.28);
+    --feito:#E9A5BA;
+    --sombra:rgba(0,0,0,.35);
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    background:var(--fundo);
+    color:var(--tinta);
+    font-family:Calibri,"Segoe UI",system-ui,sans-serif;
+    font-size:16px;
+    line-height:1.5;
+    -webkit-text-size-adjust:100%;
+  }
+  .page{max-width:940px;margin:0 auto;padding:0 20px 210px}
+
+  /* ---------- capa ---------- */
+  .capa{
+    position:relative;overflow:hidden;
+    background:var(--plum);
+    border-radius:0 0 46px 46px;
+    padding:52px 44px 46px;
+    margin:0 -20px 34px;
+    color:#fff;
+  }
+  .blob{position:absolute;border-radius:50%;opacity:.55}
+  .capa .b1{width:340px;height:340px;background:var(--vinho);right:-110px;top:-140px}
+  .capa .b2{width:190px;height:190px;background:var(--rosa);right:120px;bottom:-120px;opacity:.4}
+  .capa .b3{width:120px;height:120px;background:var(--s3);left:-50px;bottom:-60px;opacity:.6}
+  .capa h1{
+    font-family:Georgia,serif;font-size:46px;line-height:1.1;margin:0;
+    position:relative;z-index:2;text-wrap:balance;
+  }
+  .capa .kicker{
+    position:relative;z-index:2;font-size:13px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--rosa-cl);margin:0 0 10px;
+  }
+  .capa .sub{position:relative;z-index:2;color:#F0D2DB;margin:18px 0 0;max-width:640px}
+  .capa .sub b{color:#fff;font-weight:600}
+
+  /* ---------- assinatura ---------- */
+  .sig{display:flex;align-items:center;gap:7px;margin:9px 0 16px}
+  .sig i{display:block;height:3px;border-radius:2px;background:var(--rosa)}
+  .sig i.a{width:52px}
+  .sig i.b{width:16px}
+  .sig i.c{width:7px}
+
+  h2{font-family:Georgia,serif;font-size:27px;margin:0;color:var(--titulo)}
+  h3{font-family:Georgia,serif;font-size:19px;margin:0;color:var(--titulo)}
+
+  /* ---------- painel do dia ---------- */
+  .dia{
+    position:relative;overflow:hidden;
+    background:var(--card);
+    border-radius:30px;
+    padding:28px 30px 24px;
+    margin:0 0 26px;
+    box-shadow:0 2px 0 var(--sombra);
+    scroll-margin-top:20px;
+    transition:box-shadow .3s ease;
+  }
+  .dia .bg{width:230px;height:230px;background:var(--fundo);right:-90px;top:-90px;opacity:.9}
+  .dia > *{position:relative;z-index:2}
+  .dia .dashed{border:0;border-top:2px dashed var(--borda);margin:16px 0 20px}
+  .dia.fechado{box-shadow:0 0 0 2px var(--rosa),0 2px 0 var(--sombra)}
+
+  .dia-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .dia-prog{display:flex;align-items:center;gap:10px}
+  .dia-num{
+    font-size:12.5px;font-weight:700;letter-spacing:.06em;color:var(--suave);
+    font-variant-numeric:tabular-nums;white-space:nowrap;
+  }
+  .dia-track{display:block;width:104px;height:8px;border-radius:6px;background:var(--fundo);overflow:hidden}
+  .dia-track i{display:block;height:100%;width:0;border-radius:6px;background:var(--rosa);transition:width .35s cubic-bezier(.4,0,.2,1)}
+  .dia.fechado .dia-num{color:var(--feito)}
+
+  /* ---------- bloco / tarefa ---------- */
+  .bloco{
+    display:flex;gap:14px;align-items:flex-start;
+    background:var(--bloco);border-radius:20px;padding:15px 18px 15px 20px;
+    margin:0 0 12px;border-left:7px solid var(--rosa);
+    transition:opacity .25s ease,background .25s ease;
+  }
+  .bloco[data-tarefa]{cursor:pointer}
+  .bloco .corpo{flex:1;min-width:0}
+  .bloco .top{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:3px}
+  .hora{
+    font-size:12.5px;font-weight:700;letter-spacing:.05em;
+    background:var(--hora-bg);color:var(--hora-tx);
+    padding:3px 11px;border-radius:20px;white-space:nowrap;
+  }
+  .mat{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--suave);font-weight:700}
+  .bloco .titulo{font-family:Georgia,serif;font-size:17.5px;color:var(--titulo);margin:2px 0 4px}
+  .bloco p{margin:4px 0;font-size:15px}
+  .bloco ul{margin:6px 0 2px;padding-left:20px;font-size:15px}
+  .bloco li{margin:3px 0}
+  .nota{color:var(--suave);font-size:14px;font-style:italic}
+
+  /* caixinha de marcar */
+  .tick{
+    appearance:none;-webkit-appearance:none;
+    flex:0 0 auto;width:26px;height:26px;margin:2px 0 0;
+    border:2.5px solid var(--rosa);border-radius:9px;
+    background:transparent;cursor:pointer;position:relative;
+    transition:background .18s ease,border-color .18s ease,transform .12s ease;
+  }
+  .tick:hover{transform:scale(1.06)}
+  .tick:active{transform:scale(.94)}
+  .tick:checked{background:var(--rosa);border-color:var(--rosa)}
+  .tick:checked::after{
+    content:"";position:absolute;left:8px;top:3.5px;
+    width:6px;height:12px;border:solid #fff;border-width:0 3px 3px 0;
+    transform:rotate(42deg);
+  }
+  .tick:focus-visible{outline:3px solid var(--s2);outline-offset:3px}
+
+  .bloco.feito{opacity:.62}
+  .bloco.feito .titulo{text-decoration:line-through;text-decoration-thickness:1.5px}
+
+  .novo{background:color-mix(in srgb,var(--s1) 8%,var(--bloco));border-left-color:var(--s1);box-shadow:0 0 0 2px color-mix(in srgb,var(--s1) 32%,transparent)}
+  .tag{
+    font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+    background:var(--s1);color:#fff;padding:3px 10px;border-radius:20px;
+  }
+
+  .c-dev{border-left-color:var(--s3)}
+  .c-mat{border-left-color:var(--rosa)}
+  .c-lat{border-left-color:var(--s2)}
+  .c-pes{border-left-color:var(--s1)}
+  .c-exp{border-left-color:var(--rosa-cl)}
+  .c-deb{border-left-color:var(--vinho)}
+  .c-rac{border-left-color:var(--suave)}
+  .c-lei{border-left-color:var(--plum)}
+
+  /* subitens marcáveis dentro de um bloco */
+  .subs{list-style:none;padding-left:0;margin:8px 0 2px}
+  .subs li{display:flex;gap:10px;align-items:flex-start;margin:6px 0}
+  .subs .tick{width:20px;height:20px;border-radius:7px;border-width:2px;margin-top:1px}
+  .subs .tick:checked::after{left:5.5px;top:2px;width:5px;height:10px;border-width:0 2.5px 2.5px 0}
+  .subs li.feito{opacity:.6;text-decoration:line-through;text-decoration-thickness:1.5px}
+
+  /* ---------- trilho fixo ---------- */
+  .trilho{background:var(--painel);color:var(--painel-tx);border-radius:30px;padding:28px 30px;margin:0 0 30px;position:relative;overflow:hidden}
+  .trilho .bg{width:260px;height:260px;background:var(--vinho);right:-110px;bottom:-140px;opacity:.5}
+  .trilho > *{position:relative;z-index:2}
+  .trilho h2{color:#fff}
+  .trilho .sig i{background:var(--rosa-cl)}
+  .trilho-grid{display:flex;gap:14px;flex-wrap:wrap;margin-top:4px}
+  .trilho-card{
+    flex:1 1 240px;background:rgba(255,255,255,.07);
+    border-radius:20px;padding:16px 18px;
+  }
+  .trilho-card .h{font-family:Georgia,serif;font-size:17px;color:#fff}
+  .trilho-card .t{font-size:12.5px;color:var(--rosa-cl);letter-spacing:.06em;font-weight:700;margin-bottom:2px}
+  .trilho-card p{font-size:14px;margin:7px 0 0;color:var(--painel-sub)}
+  .regra{margin:22px 0 0;font-style:italic;color:#E8C2CE;border-left:3px solid var(--rosa);padding-left:14px;font-size:15px}
+
+  /* ---------- tabela ---------- */
+  .tabela-wrap{overflow-x:auto}
+  table{width:100%;border-collapse:separate;border-spacing:0;font-size:15px;margin-top:6px;min-width:460px}
+  th,td{padding:10px 12px;text-align:center}
+  th{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--suave)}
+  td:first-child,th:first-child{text-align:left}
+  tbody tr:nth-child(odd) td{background:var(--fundo)}
+  tbody tr td:first-child{border-radius:14px 0 0 14px;font-weight:600}
+  tbody tr td:last-child{border-radius:0 14px 14px 0}
+  td .tick{width:22px;height:22px;border-radius:8px;vertical-align:middle}
+  td .tick:checked::after{left:6px;top:2.5px;width:5px;height:11px;border-width:0 2.5px 2.5px 0}
+  .na{color:var(--suave);opacity:.6}
+
+  /* ---------- links ---------- */
+  .links{display:flex;gap:14px;flex-wrap:wrap}
+  .links .card{flex:1 1 300px;background:var(--card);border-radius:22px;padding:18px 20px}
+  .links h3{margin-bottom:2px}
+  .links a{display:block;color:var(--s2);font-size:14px;margin:5px 0;word-break:break-word}
+  :root[data-theme="dark"] .links a{color:var(--rosa-cl)}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .links a{color:var(--rosa-cl)}}
+
+  /* ---------- BARRA DE PROGRESSO FLUTUANTE ---------- */
+  .barra{
+    position:fixed;left:0;right:0;bottom:0;z-index:60;
+    padding:0 16px 16px;
+    pointer-events:none;
+  }
+  .barra-in{
+    pointer-events:auto;
+    max-width:940px;margin:0 auto;
+    background:var(--painel);color:var(--painel-tx);
+    border-radius:34px;
+    padding:20px 26px;
+    display:flex;align-items:center;gap:24px;
+    box-shadow:0 -6px 34px rgba(74,33,49,.30);
+    position:relative;overflow:hidden;
+  }
+  .barra-in .bg{width:300px;height:300px;background:var(--vinho);right:-120px;top:-150px;opacity:.45}
+  .barra-in > *{position:relative;z-index:2}
+  .barra-in .blob,.festa-card .blob,.dia .blob,.trilho .blob{position:absolute;z-index:1}
+  .barra-num{
+    font-family:Georgia,serif;font-size:56px;line-height:.95;color:#fff;
+    font-variant-numeric:tabular-nums;display:flex;align-items:baseline;
+    min-width:132px;
+  }
+  .barra-num i{font-style:normal;font-size:22px;color:var(--rosa-cl);margin-left:3px}
+  .barra-mid{flex:1;min-width:0}
+  .barra-top{display:flex;align-items:baseline;justify-content:space-between;gap:14px;margin-bottom:9px;flex-wrap:wrap}
+  .barra-top b{font-family:Georgia,serif;font-weight:400;font-size:19px;color:#fff}
+  .barra-top span{font-size:13px;letter-spacing:.06em;color:var(--rosa-cl);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .track{
+    position:relative;height:24px;border-radius:16px;
+    background:rgba(255,255,255,.12);overflow:hidden;
+  }
+  .track i{
+    display:block;height:100%;width:0;border-radius:16px;
+    background:linear-gradient(90deg,var(--s2),var(--rosa) 55%,var(--rosa-cl));
+    transition:width .5s cubic-bezier(.34,1.2,.4,1);
+  }
+  .track em{position:absolute;inset:0;pointer-events:none}
+  .track em b{position:absolute;top:0;bottom:0;width:2px;background:rgba(255,255,255,.30)}
+  .dias{display:flex;gap:8px;flex-wrap:wrap;margin-top:11px}
+  .chip{
+    font-size:12px;font-weight:700;letter-spacing:.05em;
+    background:rgba(255,255,255,.09);color:var(--painel-sub);
+    border:0;padding:5px 12px;border-radius:20px;cursor:pointer;
+    font-family:inherit;font-variant-numeric:tabular-nums;white-space:nowrap;
+    transition:background .2s ease,color .2s ease;
+  }
+  .chip:hover{background:rgba(255,255,255,.18);color:#fff}
+  .chip.ok{background:var(--rosa);color:#fff}
+  .chip:focus-visible{outline:2px solid #fff;outline-offset:2px}
+  .reset{
+    font-family:inherit;font-size:12.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--rosa-cl);background:transparent;border:2px solid rgba(226,162,181,.45);
+    padding:9px 16px;border-radius:20px;cursor:pointer;white-space:nowrap;
+    transition:background .2s ease,color .2s ease,border-color .2s ease;
+  }
+  .reset:hover{background:var(--rosa);border-color:var(--rosa);color:#fff}
+  .reset:focus-visible{outline:2px solid #fff;outline-offset:2px}
+
+  @media (max-width:720px){
+    .page{padding-bottom:196px}
+    .barra{padding:0 10px 10px}
+    .barra-in{flex-wrap:wrap;gap:10px;padding:13px 16px;border-radius:24px}
+    .barra-num{font-size:34px;min-width:auto}
+    .barra-num i{font-size:15px}
+    .barra-mid{flex:1 1 100%;order:3}
+    .barra-top{margin-bottom:7px;gap:8px}
+    .barra-top b{font-size:15px}
+    .barra-top span{font-size:11.5px}
+    .track{height:18px}
+    .dias{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;gap:6px;margin-top:8px}
+    .dias::-webkit-scrollbar{display:none}
+    .chip{font-size:11px;padding:4px 10px}
+    .reset{margin-left:auto;padding:7px 13px;font-size:11.5px}
+    .capa{padding:40px 24px 36px}
+    .capa h1{font-size:34px}
+    .dia{padding:22px 18px 18px;border-radius:24px}
+    .bloco{padding:14px 14px 14px 16px}
+  }
+
+  /* ---------- comemoração ---------- */
+  #confete{position:fixed;inset:0;z-index:90;pointer-events:none}
+  .festa{
+    position:fixed;inset:0;z-index:100;
+    display:none;align-items:center;justify-content:center;padding:24px;
+    background:rgba(62,32,41,.62);backdrop-filter:blur(3px);
+  }
+  .festa.on{display:flex}
+  .festa-card{
+    position:relative;overflow:hidden;
+    background:var(--card);border-radius:34px;
+    max-width:470px;width:100%;padding:38px 34px 30px;text-align:center;
+    box-shadow:0 24px 60px rgba(0,0,0,.35);
+    animation:sobe .45s cubic-bezier(.2,1.1,.35,1) both;
+  }
+  @keyframes sobe{from{transform:translateY(26px) scale(.96);opacity:0}to{transform:none;opacity:1}}
+  .festa-card .bg{width:260px;height:260px;background:var(--fundo);right:-110px;top:-120px}
+  .festa-card > *{position:relative;z-index:2}
+  .festa-card .kicker{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--s1);margin:0 0 8px;font-weight:700}
+  .festa-card h2{font-size:40px;line-height:1.05}
+  .festa-card .sig{justify-content:center;margin:14px 0 16px}
+  .festa-card p{margin:0 0 6px;font-size:16px}
+  .festa-card .placar{font-family:Georgia,serif;font-size:22px;color:var(--s2);margin:16px 0 4px}
+  .festa-btns{display:flex;gap:10px;justify-content:center;margin-top:22px;flex-wrap:wrap}
+  .btn{
+    font-family:inherit;font-size:14px;font-weight:700;letter-spacing:.04em;
+    padding:12px 22px;border-radius:22px;cursor:pointer;border:2px solid transparent;
+  }
+  .btn-p{background:var(--plum);color:#fff}
+  .btn-p:hover{background:var(--vinho)}
+  .btn-s{background:transparent;color:var(--s2);border-color:var(--borda)}
+  .btn-s:hover{border-color:var(--rosa);color:var(--rosa)}
+  .btn:focus-visible{outline:3px solid var(--rosa);outline-offset:2px}
+
+  .toasts{position:fixed;top:18px;right:18px;z-index:95;display:flex;flex-direction:column;gap:10px;align-items:flex-end;pointer-events:none}
+  .toast{
+    background:var(--painel);color:#fff;border-radius:20px;
+    padding:13px 20px;font-size:14.5px;max-width:330px;
+    box-shadow:0 10px 30px rgba(74,33,49,.35);
+    border-left:5px solid var(--rosa);
+    animation:entra .35s cubic-bezier(.2,1.1,.35,1) both;
+  }
+  .toast b{font-family:Georgia,serif;font-weight:400;display:block;font-size:16px}
+  .toast.sai{animation:saix .4s ease forwards}
+  @keyframes entra{from{transform:translateX(28px);opacity:0}to{transform:none;opacity:1}}
+  @keyframes saix{to{transform:translateX(28px);opacity:0}}
+
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
+  }
+
+  @media print{
+    body{background:#fff}
+    .capa{margin:0 0 24px;border-radius:0 0 34px 34px}
+    .dia,.trilho{break-inside:avoid;box-shadow:none}
+    .bloco{break-inside:avoid}
+    .barra,.toasts,#confete,.festa{display:none !important}
+    .page{padding-bottom:20px}
+  }
+
+  /* ---------- menu fixo no topo ---------- */
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+  .menu{position:sticky;top:0;z-index:50;background:var(--card);border-bottom:1px solid var(--borda)}
+  @supports (backdrop-filter:blur(10px)){
+    .menu{background:color-mix(in srgb,var(--card) 85%,transparent);backdrop-filter:blur(10px)}
+  }
+  .menu-in{max-width:940px;margin:0 auto;padding:9px 20px;display:flex;align-items:center;gap:14px}
+  .menu-marca{font-family:Georgia,serif;font-size:16px;color:var(--titulo);text-decoration:none;white-space:nowrap}
+  .menu-links{display:flex;gap:6px;flex:1;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .menu-links::-webkit-scrollbar{display:none}
+  .menu-links a{
+    font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--suave);text-decoration:none;padding:7px 13px;border-radius:18px;white-space:nowrap;
+    transition:background .2s ease,color .2s ease;
+  }
+  .menu-links a:hover{background:var(--fundo);color:var(--titulo)}
+  .menu-links a.ativo{background:var(--rosa);color:#fff}
+  .menu-links a:focus-visible,.menu-marca:focus-visible,.menu-semana:focus-visible{outline:3px solid var(--s2);outline-offset:2px}
+  .menu-semana{font-size:12.5px;font-weight:700;color:var(--s2);text-decoration:none;white-space:nowrap}
+  .menu-semana:hover{text-decoration:underline}
+  @media (max-width:720px){
+    .menu-in{padding:8px 12px;gap:9px}
+    .menu-marca{font-size:14px}
+    .menu-semana{font-size:11.5px}
+    .menu-links a{padding:7px 11px;font-size:12px}
+  }
+  .menu-semana .curto{display:none}
+  @media (max-width:720px){
+    .menu-semana .longo{display:none}
+    .menu-semana .curto{display:inline}
+  }
+  .dia,.links{scroll-margin-top:72px}
+  @media print{.menu{display:none}}
+
+  /* ---------- extras do guia ---------- */
+  .bloco.info{cursor:default}
+  .bloco .intro{margin:4px 0 6px}
+  .nota-c{
+    background:var(--fundo);border-left:4px solid var(--rosa);border-radius:12px;
+    padding:10px 14px;margin:10px 0;font-size:14.5px;
+  }
+  .bloco .lista{margin:6px 0 2px;padding-left:20px;font-size:15px}
+  .tab-tit{font-size:12.5px;letter-spacing:.06em;color:var(--suave);font-weight:700;margin:12px 0 0}
+  .bloco table{min-width:0;font-size:14px;margin-top:4px}
+  .bloco th,.bloco td{text-align:left;vertical-align:top;border-bottom:1px dashed var(--borda)}
+  .bloco td:first-child{font-weight:600;white-space:nowrap}
+  .bloco tbody tr:nth-child(odd) td{background:transparent}
+  .bloco tbody tr td:first-child,.bloco tbody tr td:last-child{border-radius:0}
+
+  .prompt{
+    position:relative;background:var(--painel);color:var(--painel-tx);
+    border-radius:16px;padding:12px 16px 14px;margin:10px 0 2px;cursor:default;
+  }
+  .prompt .pt{
+    display:block;font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--rosa-cl);margin-bottom:6px;padding-right:86px;
+  }
+  .prompt pre{
+    margin:0;white-space:pre-wrap;word-wrap:break-word;
+    font:13.5px/1.55 ui-monospace,Menlo,Consolas,monospace;
+  }
+  .prompt .copiar{
+    position:absolute;top:9px;right:10px;font-family:inherit;font-size:12px;font-weight:700;
+    background:var(--rosa-cl);color:var(--plum);border:0;border-radius:12px;padding:5px 12px;cursor:pointer;
+  }
+  .prompt .copiar:hover{background:#fff}
+  .prompt .copiar:focus-visible{outline:2px solid #fff;outline-offset:2px}
+  .prompt.aberto{margin-top:0}
+
+  .bloco.sem-tick{padding-left:20px}
+  .bloco.completo{opacity:.62}
+  .bloco.completo .titulo{text-decoration:line-through;text-decoration-thickness:1.5px}
+
+  /* ---------- semanas: pílulas na capa e pager ---------- */
+  .semanas{position:relative;z-index:2;display:flex;gap:8px;flex-wrap:wrap;margin:22px 0 0}
+  .semanas a{
+    font-size:13px;font-weight:700;letter-spacing:.05em;text-decoration:none;
+    color:#F0D2DB;background:rgba(255,255,255,.10);padding:7px 16px;border-radius:20px;
+    transition:background .2s ease,color .2s ease;
+  }
+  .semanas a:hover{background:rgba(255,255,255,.2);color:#fff}
+  .semanas a[aria-current="page"]{background:var(--rosa);color:#fff}
+  .semanas a:focus-visible{outline:2px solid #fff;outline-offset:2px}
+  .pager{display:flex;gap:12px;justify-content:space-between;flex-wrap:wrap;margin:8px 0 0}
+  .pager a{
+    flex:1 1 220px;text-decoration:none;text-align:center;
+    background:var(--painel);color:#fff;border-radius:26px;padding:16px 22px;
+    font-family:Georgia,serif;font-size:18px;
+    transition:background .2s ease,transform .12s ease;
+  }
+  .pager a small{display:block;font:700 11.5px Calibri,"Segoe UI",system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--rosa-cl);margin-bottom:2px}
+  .pager a:hover{background:var(--vinho);transform:translateY(-1px)}
+  .pager a:focus-visible{outline:3px solid var(--rosa);outline-offset:3px}
+  .pager .vazio{flex:1 1 220px}
+  .skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin-top:8px}
+  .skills div{background:var(--fundo);border-radius:14px;padding:10px 14px;font-size:14px}
+  .skills b{display:block;color:var(--titulo);font-family:ui-monospace,Menlo,monospace;font-size:12.5px}
+  .como-grid .h{font-size:16px}
+  .abertura{margin-top:16px}
+  .abertura .prompt{background:rgba(255,255,255,.08)}
+  .trilho .nota-c{background:rgba(255,255,255,.07);color:var(--painel-sub);border-left-color:var(--rosa)}
+</style>
+</head>
+<body>
+
+<nav class="menu" aria-label="Navegação da semana">
+  <div class="menu-in">
+    <span class="menu-marca">Semana 22</span>
+    <div class="menu-links"><a href="#botanica">Pesq</a><a href="#debate">Debate</a><a href="#exposicao">Expo</a><a href="#raciocinio">Rac</a><a href="#latim">Latim</a><a href="#final">Final</a><a href="#links">Links</a></div>
+    <a class="menu-semana" href="semana-23.html"><span class="longo">Semana 23 →</span><span class="curto">S23 →</span></a>
+  </div>
+</nav>
+
+<div class="page">
+
+  <header class="capa">
+    <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span>
+    <p class="kicker">Classical Conversations · Challenge II</p>
+    <h1>Guia para terminar a Semana 22</h1>
+    <div class="sig" style="margin-top:16px"><i class="a" style="background:var(--rosa-cl)"></i><i class="b" style="background:var(--rosa-cl)"></i><i class="c" style="background:var(--rosa-cl)"></i></div>
+    <p class="sub">Pesquisa: <b>Botânica</b> · Debate: <b>Catolicismo Romano, 1300–1500</b> · Leitura: <b>Nada de Novo no Front</b> · Latim: <b>Lições 21 e 22</b></p>
+    <nav class="semanas" aria-label="Escolher a semana"><a href="index.html" aria-current="page">Semana 22</a><a href="semana-23.html">Semana 23</a></nav>
+  </header>
+
+  <section class="trilho">
+    <span class="blob bg"></span>
+    <h2 style="font-family:Georgia,serif">Como usar este guia</h2>
+    <div class="sig"><i class="a"></i><i class="b"></i><i class="c"></i></div>
+    <p style="margin:0 0 6px;color:var(--painel-sub)">Passo a passo de cada tarefa, com prompts para pedir ajuda à IA sem que ela faça o trabalho por você. Você pensa, escreve e decide; a IA pergunta, explica e corrige.</p>
+    <div class="trilho-grid como-grid"><div class="trilho-card"><div class="t">Passo 1</div><div class="h">Faça na ordem</div><p>Siga os passos de cada painel e marque cada um.</p></div><div class="trilho-card"><div class="t">Passo 2</div><div class="h">Travou?</div><p>Copie o prompt da tarefa, cole na IA e complete o que está entre [colchetes].</p></div><div class="trilho-card"><div class="t">Passo 3</div><div class="h">A IA escreveu por você?</div><p>Mande: “Pare. Não responda por mim. Só me faça uma pergunta que me ajude a pensar.”</p></div><div class="trilho-card"><div class="t">Passo 4</div><div class="h">Suas palavras</div><p>Tudo o que for entregue precisa estar com as suas palavras.</p></div></div>
+    <div class="abertura"><div class="prompt"><span class="pt">Prompt: Abertura (cole uma vez no começo da conversa)</span><button class="copiar" type="button">Copiar</button><pre>Você vai ser meu tutor no estilo Classical Conversations Challenge II. Regras:
+1. Não faça minhas tarefas nem escreva textos prontos para mim.
+2. Me ajude com perguntas, dicas curtas e explicações de conceitos.
+3. Quando eu mostrar algo que escrevi, aponte o que está bom e no máximo 3 coisas para melhorar, sem reescrever.
+4. Se eu pedir a resposta pronta, lembre-me dessas regras e me dê só uma pista.
+Esta semana estudo: Botânica, Catolicismo Romano de 1300 a 1500, Nada de Novo no Front (caps. 7 a 12), o diálogo Mênon ("O que é virtude?") e Latim (voz passiva no presente e ablativo de agente).</pre></div></div>
+  </section>
+
+<section class="dia" data-dia="Biologia: Botânica" data-curto="Pesq" id="botanica">
+<span class="blob bg"></span>
+<div class="dia-head"><div><p class="mat" style="margin:0 0 2px">Pesquisa · Seg, Qua e Qui</p><h2>Biologia: Botânica</h2></div><span class="dia-prog"><span class="dia-num"></span><span class="dia-track"><i></i></span></span></div>
+<div class="sig"><i class="a"></i><i class="b"></i><i class="c"></i></div>
+<hr class="dashed">
+<div class="bloco c-pes sem-tick">
+<div class="corpo">
+<div class="top"><span class="mat">Segunda</span></div>
+<div class="titulo">1. Vocabulário</div>
+<ul class="subs"><li><input type="checkbox" class="tick" data-k="b1" aria-label="Marcar: Escrever no caderno uma definição com as suas palavras para: folha, formatos de folha (lin"><span>Escrever no caderno uma definição com as suas palavras para: folha, formatos de folha (linear, oval, lobada, fendida, escamosa, aciculada), pecíolo, angiosperma, gimnosperma, rizoide, raiz pivotante, tubérculo, xilema, floema.</span></li><li><input type="checkbox" class="tick" data-k="b2" aria-label="Marcar: Usar pelo menos 2 fontes confiáveis (livro de biologia, Britannica, site de universidade)."><span>Usar pelo menos 2 fontes confiáveis (livro de biologia, Britannica, site de universidade). Anotar autor, título e site de cada uma.</span></li><li><input type="checkbox" class="tick" data-k="b3" aria-label="Marcar: Desenhar os 6 formatos de folha ao lado das definições."><span>Desenhar os 6 formatos de folha ao lado das definições.</span></li><li><input type="checkbox" class="tick" data-k="b4" aria-label="Marcar: Guardar o vocabulário para o jogo da Semana 24."><span>Guardar o vocabulário para o jogo da Semana 24.</span></li></ul>
+<div class="nota-c"><b>Dicas para não confundir:</b> xilema leva água <i>para cima</i>; floema leva açúcar <i>para todo lado</i>. Angiosperma tem fruto; gimnosperma tem semente “nua” (cone). Batata é tubérculo (caule); mandioca é raiz tuberosa.</div>
+<div class="prompt"><span class="pt">Prompt: Conferir minhas definições</span><button class="copiar" type="button">Copiar</button><pre>Escrevi estas definições de Botânica com as minhas palavras. Não reescreva. Para cada uma, diga só "correta", "incompleta" ou "errada" e, se não estiver correta, me faça uma pergunta que me leve a corrigir sozinha:
+[cole suas definições]</pre></div>
+<div class="prompt"><span class="pt">Prompt: A fonte é confiável?</span><button class="copiar" type="button">Copiar</button><pre>Use o teste PAAC (Propósito, Autoridade, Precisão, Atualidade) comigo. Não avalie por mim: me faça uma pergunta de cada vez sobre esta fonte e, no fim, eu decido se ela é confiável.
+Fonte: [cole o link ou título]</pre></div>
+</div></div>
+<div class="bloco c-pes sem-tick">
+<div class="corpo">
+<div class="top"><span class="mat">Quarta</span></div>
+<div class="titulo">2. Apêndice e Big Data Project</div>
+<ul class="subs"><li><input type="checkbox" class="tick" data-k="b5" aria-label="Marcar: Responder as perguntas do apêndice usando o vocabulário."><span>Responder as perguntas do apêndice usando o vocabulário.</span></li><li><input type="checkbox" class="tick" data-k="b6" aria-label="Marcar: iNaturalist: fotografar 3 a 5 plantas (folha de frente, verso e planta inteira) e registra"><span>iNaturalist: fotografar 3 a 5 plantas (folha de frente, verso e planta inteira) e registrar local e data.</span></li><li><input type="checkbox" class="tick" data-k="b7" aria-label="Marcar: Diário da natureza: para cada planta, anotar formato da folha, nervação, se tem pecíolo e "><span>Diário da natureza: para cada planta, anotar formato da folha, nervação, se tem pecíolo e se parece angiosperma ou gimnosperma.</span></li><li><input type="checkbox" class="tick" data-k="b8" aria-label="Marcar: Escrever 3 perguntas para o palestrante convidado."><span>Escrever 3 perguntas para o palestrante convidado.</span></li></ul>
+<div class="prompt"><span class="pt">Prompt: Travei numa pergunta do apêndice</span><button class="copiar" type="button">Copiar</button><pre>Estou respondendo o apêndice de Botânica. A pergunta é: [cole a pergunta]
+Minha tentativa: [escreva o que pensou, mesmo que incompleto]
+Não me dê a resposta. Me diga qual termo do vocabulário devo revisar e me faça uma pergunta que me leve até a resposta.</pre></div>
+<div class="prompt"><span class="pt">Prompt: Identificar a planta que fotografei</span><button class="copiar" type="button">Copiar</button><pre>Fotografei uma planta com estas características: [formato da folha, borda, nervação, flor/fruto/cone, onde estava]. Não me diga o nome logo. Me faça perguntas, uma de cada vez, para eu mesma chegar ao grupo da planta (angiosperma ou gimnosperma, monocot. ou eudicot.).</pre></div>
+</div></div>
+<div class="bloco c-pes sem-tick">
+<div class="corpo">
+<div class="top"><span class="mat">Quinta</span></div>
+<div class="titulo">3. Ensaio de 500 palavras</div>
+<ul class="subs"><li><input type="checkbox" class="tick" data-k="b9" aria-label="Marcar: Escolher o tópico (ex.: como a folha e o sistema vascular trabalham juntos)."><span>Escolher o tópico (ex.: como a folha e o sistema vascular trabalham juntos).</span></li><li><input type="checkbox" class="tick" data-k="b10" aria-label="Marcar: Pensar o tema com os Cinco Tópicos: Definição, Comparação, Relação, Circunstância, Testemu"><span>Pensar o tema com os Cinco Tópicos: Definição, Comparação, Relação, Circunstância, Testemunho.</span></li><li><input type="checkbox" class="tick" data-k="b11" aria-label="Marcar: Introdução: apresentar o tópico e dizer o que o ensaio vai mostrar."><span>Introdução: apresentar o tópico e dizer o que o ensaio vai mostrar.</span></li><li><input type="checkbox" class="tick" data-k="b12" aria-label="Marcar: Desenvolvimento: 2 ou 3 parágrafos com detalhes técnicos e o vocabulário."><span>Desenvolvimento: 2 ou 3 parágrafos com detalhes técnicos e o vocabulário.</span></li><li><input type="checkbox" class="tick" data-k="b13" aria-label="Marcar: Conclusão: qual o papel da ética e da mordomia cristã aqui? (ex.: Gênesis 2.15)"><span>Conclusão: qual o papel da ética e da mordomia cristã aqui? (ex.: Gênesis 2.15)</span></li><li><input type="checkbox" class="tick" data-k="b14" aria-label="Marcar: Checklist: 450 a 550 palavras · 3 ou mais termos técnicos · fontes citadas · releu em voz "><span>Checklist: 450 a 550 palavras · 3 ou mais termos técnicos · fontes citadas · releu em voz alta.</span></li></ul>
+<div class="prompt"><span class="pt">Prompt: Montar o esboço</span><button class="copiar" type="button">Copiar</button><pre>Vou escrever um ensaio de 500 palavras sobre [seu tópico de Botânica]. Use os Cinco Tópicos de Invenção comigo: me faça 2 perguntas de cada tópico (Definição, Comparação, Relação, Circunstância, Testemunho). Eu respondo e depois organizo o esboço sozinha. Não escreva parágrafos.</pre></div>
+<div class="prompt"><span class="pt">Prompt: Revisar o ensaio</span><button class="copiar" type="button">Copiar</button><pre>Terminei meu ensaio de Botânica. Não reescreva nenhuma frase. Confira e me responda em lista:
+1. Tem entre 450 e 550 palavras?
+2. Quais termos técnicos usei, e algum está usado errado?
+3. A introdução apresenta o tópico?
+4. A conclusão fala de ética e mordomia cristã?
+5. Até 3 sugestões do que eu mesma devo melhorar.
+[cole o ensaio]</pre></div>
+<div class="prompt"><span class="pt">Prompt: Citar as fontes em MLA</span><button class="copiar" type="button">Copiar</button><pre>Me ensine o formato MLA para este tipo de fonte: [livro / site / artigo]. Mostre o modelo com lugares vazios (Autor. Título. ...), não a citação pronta. Depois confiro a minha: [cole sua citação].</pre></div>
+</div></div>
+</section>
+
+<section class="dia" data-dia="Catolicismo Romano, 1300 a 1500" data-curto="Debate" id="debate">
+<span class="blob bg"></span>
+<div class="dia-head"><div><p class="mat" style="margin:0 0 2px">Debate · Seg e Qua</p><h2>Catolicismo Romano, 1300 a 1500</h2></div><span class="dia-prog"><span class="dia-num"></span><span class="dia-track"><i></i></span></span></div>
+<div class="sig"><i class="a"></i><i class="b"></i><i class="c"></i></div>
+<hr class="dashed">
+<div class="bloco c-deb sem-tick">
+<div class="corpo">
+<div class="top"><span class="mat">Segunda</span></div>
+<div class="titulo">1. Quatro parágrafos-resumo</div>
+<p class="intro">Um parágrafo de 4 a 5 linhas para cada tópico, respondendo <b>quem, o quê, quando, onde e por quê</b>.</p>
+<div class="tabela-wrap"><table><thead><tr><th>Tópico</th><th>Pistas para pesquisar (não é a resposta)</th></tr></thead><tbody><tr><td>Avinhão</td><td>Por que o papa saiu de Roma? Qual rei francês? O que foi o Grande Cisma do Ocidente? Quantos papas ao mesmo tempo?</td></tr><tr><td>As três mulheres</td><td>Qual papa Catarina convenceu? Que livro Juliana escreveu? Que cidade Joana libertou e em que guerra?</td></tr><tr><td>Dante e Chaucer</td><td>Qual obra de cada um? Em que língua escreveram e por que isso importa? O que criticaram na Igreja?</td></tr><tr><td>Constança</td><td>Quem convocou? Como acabou o cisma? O que é conciliarismo? O que aconteceu com Jan Hus?</td></tr></tbody></table></div>
+<ul class="subs"><li><input type="checkbox" class="tick" data-k="d1" aria-label="Marcar: Antipapas e o Papado de Avinhão"><span>Antipapas e o Papado de Avinhão</span></li><li><input type="checkbox" class="tick" data-k="d2" aria-label="Marcar: Catarina de Sena, Juliana de Norwich e Joana d&#x27;Arc"><span>Catarina de Sena, Juliana de Norwich e Joana d'Arc</span></li><li><input type="checkbox" class="tick" data-k="d3" aria-label="Marcar: Dante Alighieri e Geoffrey Chaucer"><span>Dante Alighieri e Geoffrey Chaucer</span></li><li><input type="checkbox" class="tick" data-k="d4" aria-label="Marcar: Concílio de Constança e o Movimento Conciliar"><span>Concílio de Constança e o Movimento Conciliar</span></li></ul>
+<div class="prompt"><span class="pt">Prompt: Organizar a pesquisa</span><button class="copiar" type="button">Copiar</button><pre>Estou pesquisando "[tópico]" para um parágrafo de 4 a 5 linhas que responda quem, o quê, quando, onde e por quê. Não escreva o parágrafo. Me indique 2 fontes confiáveis para pesquisar e me faça uma pergunta para cada uma das 5 perguntas-guia.</pre></div>
+<div class="prompt"><span class="pt">Prompt: Conferir meu parágrafo</span><button class="copiar" type="button">Copiar</button><pre>Escrevi este parágrafo sobre [tópico]. Não reescreva. Marque quais das 5 perguntas (quem, o quê, quando, onde, por quê) estão respondidas e quais faltam. Aponte se alguma data ou nome parece errado para eu conferir na fonte.
+[cole o parágrafo]</pre></div>
+</div></div>
+<div class="bloco c-deb sem-tick">
+<div class="corpo">
+<div class="top"><span class="mat">Segunda</span></div>
+<div class="titulo">2. Encômio #5</div>
+<ul class="subs"><li><input type="checkbox" class="tick" data-k="d5" aria-label="Marcar: Escolher uma figura (ex.: Joana d&#x27;Arc, Catarina de Sena, Dante)."><span>Escolher uma figura (ex.: Joana d'Arc, Catarina de Sena, Dante).</span></li><li><input type="checkbox" class="tick" data-k="d6" aria-label="Marcar: Preencher o quadro Virtudes / Vícios com pelo menos 4 itens de cada lado, com um fato que "><span>Preencher o quadro Virtudes / Vícios com pelo menos 4 itens de cada lado, com um fato que prove cada um.</span></li><li><input type="checkbox" class="tick" data-k="d7" aria-label="Marcar: Escrever o encômio: Prólogo, Origem, Criação, Feitos, Comparação, Epílogo."><span>Escrever o encômio: Prólogo, Origem, Criação, Feitos, Comparação, Epílogo.</span></li></ul>
+<div class="prompt"><span class="pt">Prompt: Quadro de virtudes e vícios</span><button class="copiar" type="button">Copiar</button><pre>Estou fazendo o quadro Virtudes / Vícios de [figura]. Minha lista: [cole]. Não acrescente itens. Para cada um, me pergunte qual fato da vida dessa pessoa prova isso. Se eu não souber, me diga onde pesquisar.</pre></div>
+</div></div>
+<div class="bloco c-deb sem-tick">
+<div class="corpo">
+<div class="top"><span class="mat">Quarta</span></div>
+<div class="titulo">3. Parágrafo-resumo rápido</div>
+<ul class="subs"><li><input type="checkbox" class="tick" data-k="d8" aria-label="Marcar: Juntar os 4 tópicos num único parágrafo (quem, o quê, quando, onde, por quê) mostrando a l"><span>Juntar os 4 tópicos num único parágrafo (quem, o quê, quando, onde, por quê) mostrando a ligação entre eles.</span></li></ul>
+<div class="prompt"><span class="pt">Prompt: Ligar os tópicos</span><button class="copiar" type="button">Copiar</button><pre>Preciso de um parágrafo que una Avinhão, as três mulheres, Dante e Chaucer e o Concílio de Constança. Não escreva. Me faça 3 perguntas que me ajudem a achar o que esses tópicos têm em comum.</pre></div>
+</div></div>
+</section>
+
+<section class="dia" data-dia="Nada de Novo no Front" data-curto="Expo" id="exposicao">
+<span class="blob bg"></span>
+<div class="dia-head"><div><p class="mat" style="margin:0 0 2px">Exposição · Ter, Qua e Qui + leitura da noite</p><h2>Nada de Novo no Front</h2></div><span class="dia-prog"><span class="dia-num"></span><span class="dia-track"><i></i></span></span></div>
+<div class="sig"><i class="a"></i><i class="b"></i><i class="c"></i></div>
+<hr class="dashed">
+<div class="bloco c-exp sem-tick">
+<div class="corpo">
+<div class="top"><span class="mat">Leitura</span></div>
+<div class="titulo">1. Leitura e anotações</div>
+<ul class="subs"><li><input type="checkbox" class="tick" data-k="e1" aria-label="Marcar: Cap. 7: o que mudou em Paul que a casa não acompanha?"><span>Cap. 7: o que mudou em Paul que a casa não acompanha?</span></li><li><input type="checkbox" class="tick" data-k="e2" aria-label="Marcar: Cap. 8: o que Paul pensa ao ver os prisioneiros russos?"><span>Cap. 8: o que Paul pensa ao ver os prisioneiros russos?</span></li><li><input type="checkbox" class="tick" data-k="e3" aria-label="Marcar: Cap. 9: o momento em que Paul mata o soldado francês e a reação dele."><span>Cap. 9: o momento em que Paul mata o soldado francês e a reação dele.</span></li><li><input type="checkbox" class="tick" data-k="e4" aria-label="Marcar: Cap. 10: o que o hospital mostra sobre a guerra?"><span>Cap. 10: o que o hospital mostra sobre a guerra?</span></li><li><input type="checkbox" class="tick" data-k="e5" aria-label="Marcar: Cap. 11: como a morte de Kat afeta Paul?"><span>Cap. 11: como a morte de Kat afeta Paul?</span></li><li><input type="checkbox" class="tick" data-k="e6" aria-label="Marcar: Cap. 12: por que o livro termina com “nada de novo no front”?"><span>Cap. 12: por que o livro termina com “nada de novo no front”?</span></li></ul>
+<div class="nota-c">Para cada capítulo: 2 anotações com o número da página. Uma sobre o que acontece, outra sobre o que Paul sente ou pensa.</div>
+<div class="prompt"><span class="pt">Prompt: Entender um capítulo sem resumo pronto</span><button class="copiar" type="button">Copiar</button><pre>Li o capítulo [número] de Nada de Novo no Front. Não me dê resumo. Primeiro eu conto o que entendi, depois você me faz 3 perguntas sobre o que eu posso ter deixado passar.
+O que eu entendi: [escreva]</pre></div>
+</div></div>
+<div class="bloco c-exp sem-tick">
+<div class="corpo">
+<div class="top"><span class="mat">Quinta</span></div>
+<div class="titulo">2. Ensaio</div>
+<p class="intro"><b>Tema:</b> como a guerra ao mesmo tempo adormece e desperta a humanidade dos soldados.</p>
+<ul class="subs"><li><input type="checkbox" class="tick" data-k="e7" aria-label="Marcar: Tese em uma frase."><span>Tese em uma frase.</span></li><li><input type="checkbox" class="tick" data-k="e8" aria-label="Marcar: Parágrafo 1: exemplos de como a guerra adormece (2 cenas do livro)."><span>Parágrafo 1: exemplos de como a guerra <i>adormece</i> (2 cenas do livro).</span></li><li><input type="checkbox" class="tick" data-k="e9" aria-label="Marcar: Parágrafo 2: exemplos de como a guerra desperta (2 cenas do livro)."><span>Parágrafo 2: exemplos de como a guerra <i>desperta</i> (2 cenas do livro).</span></li><li><input type="checkbox" class="tick" data-k="e10" aria-label="Marcar: Parágrafo 3: a tensão entre os dois (por que o despertar não dura?)."><span>Parágrafo 3: a tensão entre os dois (por que o despertar não dura?).</span></li><li><input type="checkbox" class="tick" data-k="e11" aria-label="Marcar: Conclusão ligada à última linha do livro."><span>Conclusão ligada à última linha do livro.</span></li><li><input type="checkbox" class="tick" data-k="e12" aria-label="Marcar: Cada cena citada com capítulo e página. Releu em voz alta."><span>Cada cena citada com capítulo e página. Releu em voz alta.</span></li></ul>
+<div class="prompt"><span class="pt">Prompt: Testar minha tese</span><button class="copiar" type="button">Copiar</button><pre>Minha tese para o ensaio "como a guerra adormece e desperta a humanidade dos soldados" é: [escreva]. Não escreva outra. Faça o papel de um leitor que discorda e me dê 2 objeções para eu responder.</pre></div>
+<div class="prompt"><span class="pt">Prompt: Achar evidências</span><button class="copiar" type="button">Copiar</button><pre>Quero provar que a guerra [adormece / desperta] a humanidade de Paul. Não me diga as cenas. Me pergunte de quais momentos dos capítulos 7 a 12 eu me lembro e me ajude a decidir qual prova melhor o meu ponto.</pre></div>
+<div class="prompt"><span class="pt">Prompt: Revisar o ensaio</span><button class="copiar" type="button">Copiar</button><pre>Revise meu ensaio sem reescrever frases. Diga: 1) a tese está clara? 2) cada parágrafo tem uma cena do livro como prova? 3) a conclusão volta para a tese? 4) até 3 coisas que eu devo melhorar.
+[cole o ensaio]</pre></div>
+</div></div>
+</section>
+
+<section class="dia" data-dia="Diálogo socrático: O que é virtude?" data-curto="Rac" id="raciocinio">
+<span class="blob bg"></span>
+<div class="dia-head"><div><p class="mat" style="margin:0 0 2px">Raciocínio · Ter e Qui</p><h2>Diálogo socrático: O que é virtude?</h2></div><span class="dia-prog"><span class="dia-num"></span><span class="dia-track"><i></i></span></span></div>
+<div class="sig"><i class="a"></i><i class="b"></i><i class="c"></i></div>
+<hr class="dashed">
+<div class="bloco c-rac sem-tick">
+<div class="corpo">
+<div class="top"><span class="mat">Terça e quinta</span></div>
+<div class="titulo">Entrevistas e resposta da semana</div>
+<ul class="subs"><li><input type="checkbox" class="tick" data-k="r1" aria-label="Marcar: Entrevistar um cristão e um não cristão com as mesmas perguntas e anotar as respostas."><span>Entrevistar um cristão e um não cristão com as mesmas perguntas e anotar as respostas.</span></li><li><input type="checkbox" class="tick" data-k="r2" aria-label="Marcar: Ler Mênon 85a até o fim (na comunidade, sem discussão)."><span>Ler Mênon 85a até o fim (na comunidade, sem discussão).</span></li><li><input type="checkbox" class="tick" data-k="r3" aria-label="Marcar: Comparar as duas entrevistas com o que Sócrates concluiu."><span>Comparar as duas entrevistas com o que Sócrates concluiu.</span></li><li><input type="checkbox" class="tick" data-k="r4" aria-label="Marcar: Escrever a resposta da semana (1 a 2 parágrafos)."><span>Escrever a resposta da semana (1 a 2 parágrafos).</span></li></ul>
+<div class="nota-c"><b>Perguntas para as entrevistas:</b> O que é virtude, em uma frase? · Dê um exemplo de pessoa virtuosa. · Virtude é igual para todos? · Dá para fazer algo bom sem ser virtuoso? · Virtude pode ser ensinada? · De onde vem o padrão do que é bom?</div>
+<div class="prompt"><span class="pt">Prompt: Praticar como Sócrates</span><button class="copiar" type="button">Copiar</button><pre>Faça o papel de Sócrates no diálogo Mênon. Eu vou dizer o que acho que é virtude e você me responde só com perguntas, uma de cada vez, mostrando as falhas da minha definição. Não diga a resposta certa. Minha definição: [escreva]</pre></div>
+<div class="prompt"><span class="pt">Prompt: Comparar entrevistas</span><button class="copiar" type="button">Copiar</button><pre>Entrevistei duas pessoas sobre "O que é virtude?". Respostas: [cole]. Não tire conclusões por mim. Me pergunte em que elas concordam, em que discordam e o que Sócrates diria para cada uma.</pre></div>
+</div></div>
+</section>
+
+<section class="dia" data-dia="Lições 21 e 22" data-curto="Latim" id="latim">
+<span class="blob bg"></span>
+<div class="dia-head"><div><p class="mat" style="margin:0 0 2px">Latim II · Seg a Qui</p><h2>Lições 21 e 22</h2></div><span class="dia-prog"><span class="dia-num"></span><span class="dia-track"><i></i></span></span></div>
+<div class="sig"><i class="a"></i><i class="b"></i><i class="c"></i></div>
+<hr class="dashed">
+<div class="bloco c-lat sem-tick info">
+<div class="corpo">
+<div class="top"><span class="mat">Para copiar</span></div>
+<div class="titulo">Regras para copiar no caderno</div>
+<div class="nota-c"><b>Presente passivo:</b> troque a terminação ativa pela passiva: -ō → -or · -s → -ris · -t → -tur · -mus → -mur · -tis → -minī · -nt → -ntur. Infinitivo passivo: -re → -rī (3ª: regere → regī).</div>
+<div class="nota-c"><b>Ablativo de agente:</b> pessoa que faz a ação de um verbo passivo = ā/ab + ablativo. Coisa (instrumento) = ablativo sem preposição.</div>
+<div class="nota-c"><b>3ª conjugação:</b> a 2ª pessoa sing. passiva é -eris (regeris). 3ª -iō e 4ª mantêm o i antes de -ō, -unt, -untur.</div>
+<div class="nota-c"><b>Parse:</b> forma base → declinação/conjugação → caso/tempo → gênero/pessoa → número → função na frase.</div>
+</div></div>
+<div class="bloco c-lat sem-tick">
+<div class="corpo">
+<div class="top"><span class="mat">Seg a Qui</span></div>
+<div class="titulo">Tarefas</div>
+<p class="tab-tit">Tabela para preencher no caderno</p>
+<div class="tabela-wrap"><table><thead><tr><th></th><th>amō (pass.)</th><th>moneō (pass.)</th><th>regō (pass.)</th><th>capiō (pass.)</th><th>audiō (pass.)</th></tr></thead><tbody><tr><td>1ª sg</td><td>amor</td><td></td><td></td><td></td><td></td></tr><tr><td>2ª sg</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>3ª sg</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>1ª pl</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>2ª pl</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>3ª pl</td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table></div>
+<ul class="subs"><li><input type="checkbox" class="tick" data-k="l1" aria-label="Marcar: Seg: ler em voz alta as linhas designadas da Vulgata; flashcards do vocabulário novo; copi"><span>Seg: ler em voz alta as linhas designadas da Vulgata; flashcards do vocabulário novo; copiar as regras.</span></li><li><input type="checkbox" class="tick" data-k="l2" aria-label="Marcar: Seg: Meta Tour 4, ler / copiar / traduzir versículos 1 a 15."><span>Seg: Meta Tour 4, ler / copiar / traduzir versículos 1 a 15.</span></li><li><input type="checkbox" class="tick" data-k="l3" aria-label="Marcar: Ter: drill de flashcards + traduzir os versículos designados (checar: gramática, português"><span>Ter: drill de flashcards + traduzir os versículos designados (checar: gramática, português, contexto).</span></li><li><input type="checkbox" class="tick" data-k="l4" aria-label="Marcar: Qua: Lição 22, vocabulário novo; montar sozinha as tabelas de regō, capiō e audiō na ativa"><span>Qua: Lição 22, vocabulário novo; montar sozinha as tabelas de regō, capiō e audiō na ativa e na passiva.</span></li><li><input type="checkbox" class="tick" data-k="l5" aria-label="Marcar: Qui: drill completo; parse de 3 a 5 versículos; traduzir primeiro sem ajuda e depois compa"><span>Qui: drill completo; parse de 3 a 5 versículos; traduzir primeiro sem ajuda e depois comparar.</span></li></ul>
+<div class="prompt"><span class="pt">Prompt: Tomar meus flashcards</span><button class="copiar" type="button">Copiar</button><pre>Seja meu tomador de flashcards de latim. Vocabulário: [cole a lista]. Mostre uma palavra latina por vez, espere minha resposta (significado + partes principais), diga se acertei e só então passe para a próxima. No fim, liste as que errei.</pre></div>
+<div class="prompt"><span class="pt">Prompt: Conferir meu parse</span><button class="copiar" type="button">Copiar</button><pre>Fiz o parse deste versículo: [cole o versículo]
+Meu parse: [palavra: forma base, conjugação/declinação, caso/tempo, gênero/pessoa, número, função]
+Não faça o parse por mim. Diga só quais itens estão errados e me dê uma pista de gramática para cada um.</pre></div>
+<div class="prompt"><span class="pt">Prompt: Minha tradução faz sentido?</span><button class="copiar" type="button">Copiar</button><pre>Traduzi este versículo sozinha: [latim] → [minha tradução]. Não me dê a tradução. Me ajude a checar: 1) faz sentido pelas regras do latim? 2) faz sentido em português? 3) faz sentido no contexto? Aponte a palavra que preciso rever.</pre></div>
+<div class="prompt"><span class="pt">Prompt: Não entendi a voz passiva</span><button class="copiar" type="button">Copiar</button><pre>Me explique a voz passiva no presente em latim como professor, usando Definição, Comparação (com o português), Relação e um exemplo. Depois me dê 5 frases curtas para eu mesma passar da ativa para a passiva e corrija só depois que eu responder.</pre></div>
+</div></div>
+<div class="bloco c-lat sem-tick info">
+<div class="corpo">
+<div class="top"><span class="mat">Para treinar</span></div>
+<div class="titulo">Versículos para treinar parse</div>
+<ul class="lista"><li><i>Omnis arbor quae non facit fructum bonum exciditur et in ignem mittitur.</i> (Mt 7.19)</li><li><i>Unaquaeque enim arbor de fructu suo cognoscitur.</i> (Lc 6.44)</li><li><i>Qui credit in eum non iudicatur.</i> (Jo 3.18)</li><li><i>Iustitia enim Dei in eo revelatur.</i> (Rm 1.17)</li><li><i>Iesus ductus est in desertum a Spiritu ut temptaretur a diabolo.</i> (Mt 4.1, ablativo de agente)</li></ul>
+</div></div>
+</section>
+
+<section class="dia" data-dia="Checklist final" data-curto="Final" id="final">
+<span class="blob bg"></span>
+<div class="dia-head"><div><p class="mat" style="margin:0 0 2px">Quinta, 17:45</p><h2>Checklist final</h2></div><span class="dia-prog"><span class="dia-num"></span><span class="dia-track"><i></i></span></span></div>
+<div class="sig"><i class="a"></i><i class="b"></i><i class="c"></i></div>
+<hr class="dashed">
+<div class="bloco c-lei sem-tick">
+<div class="corpo">
+<div class="top"><span class="mat">Antes da comunidade</span></div>
+<div class="titulo">Tudo pronto para amanhã?</div>
+<ul class="subs"><li><input type="checkbox" class="tick" data-k="f1" aria-label="Marcar: Latim: Lições 21 e 22 com flashcards, tabelas e parse em dia"><span>Latim: Lições 21 e 22 com flashcards, tabelas e parse em dia</span></li><li><input type="checkbox" class="tick" data-k="f2" aria-label="Marcar: Pesquisa: vocabulário, apêndice, iNaturalist e ensaio de 500 palavras"><span>Pesquisa: vocabulário, apêndice, iNaturalist e ensaio de 500 palavras</span></li><li><input type="checkbox" class="tick" data-k="f3" aria-label="Marcar: Exposição: livro terminado e ensaio da humanidade escrito"><span>Exposição: livro terminado e ensaio da humanidade escrito</span></li><li><input type="checkbox" class="tick" data-k="f4" aria-label="Marcar: Debate: 4 parágrafos, encômio e parágrafo-resumo escritos"><span>Debate: 4 parágrafos, encômio e parágrafo-resumo escritos</span></li><li><input type="checkbox" class="tick" data-k="f5" aria-label="Marcar: Raciocínio: entrevistas feitas e resposta da semana escrita"><span>Raciocínio: entrevistas feitas e resposta da semana escrita</span></li><li><input type="checkbox" class="tick" data-k="f6" aria-label="Marcar: Tudo com as minhas palavras e relido em voz alta"><span>Tudo com as minhas palavras e relido em voz alta</span></li></ul>
+</div></div>
+</section>
+
+  <section class="links" id="links">
+    <div class="card"><h3>Pesquisa e fontes</h3><a href="https://www.inaturalist.org/">iNaturalist — Big Data Project</a></div><div class="card"><h3>Latim</h3><a href="https://www.bibliacatolica.com.br/vulgata-latina/">Vulgata comparada</a><a href="https://www.perseus.tufts.edu/hopper/">Dicionário de latim (Perseus)</a></div><div class="card"><h3>Skills do Claude</h3><p class="nota" style="margin:4px 0">Arquivos SKILL.md que podem ser adicionados ao Claude (Configurações → Skills). Mesmo com elas, comece pelo prompt de abertura.</p><div class="skills"><div><b>cinco-topicos-invencao-ciencia</b>Pensar e discutir Botânica com os Cinco Tópicos.</div><div><b>metodo-cientifico-pesquisa</b>Organizar a pesquisa científica e o ensaio.</div><div><b>pesquisa-digital-confiavel</b>Teste PAAC para avaliar fontes.</div><div><b>citacao-mla-fontes</b>Citar fontes em MLA e evitar plágio.</div><div><b>sumarychurchstory</b>Formato quem, o quê, quando, onde, por quê (use para conferir, não para gerar).</div><div><b>professor-latim</b>Explicações de gramática latina.</div><div><b>fontes-latim</b>Gramáticas, dicionários e Vulgata confiáveis.</div></div></div>
+  </section>
+
+  <div class="pager"><span class="vazio"></span><a href="semana-23.html"><small>Próxima semana</small>Semana 23 →</a></div>
+
+</div>
+
+<!-- BARRA FLUTUANTE -->
+<div class="barra">
+  <div class="barra-in">
+    <span class="blob bg"></span>
+    <div class="barra-num"><span id="pct">0</span><i>%</i></div>
+    <div class="barra-mid">
+      <div class="barra-top">
+        <b id="frase">Semana 22 — bora começar</b>
+        <span id="cont">0 de 0 marcadas</span>
+      </div>
+      <div class="track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Progresso da semana" id="track">
+        <i id="fill"></i>
+        <em><b style="left:25%"></b><b style="left:50%"></b><b style="left:75%"></b></em>
+      </div>
+      <div class="dias" id="dias"></div>
+    </div>
+    <button class="reset" id="reset" type="button">Zerar</button>
+  </div>
+</div>
+
+<canvas id="confete" aria-hidden="true"></canvas>
+<div class="toasts" id="toasts" aria-live="polite"></div>
+
+<div class="festa" id="festa" role="dialog" aria-modal="true" aria-labelledby="festa-h">
+  <div class="festa-card">
+    <span class="blob bg"></span>
+    <p class="kicker">Semana 22 · Challenge II</p>
+    <h2 id="festa-h">Parabéns!</h2>
+    <div class="sig"><i class="a"></i><i class="b"></i><i class="c"></i></div>
+    <p id="festa-txt">Você fechou a semana inteira: Botânica, Debate, Exposição, Raciocínio e Latim, do vocabulário ao checklist final.</p>
+    <p class="placar" id="festa-placar"></p>
+    <div class="festa-btns">
+      <button class="btn btn-p" id="festa-ok" type="button">Fechar</button>
+      <a class="btn btn-s" style="text-decoration:none" href="semana-23.html">Semana 23 →</a>
+      <button class="btn btn-s" id="festa-zerar" type="button">Começar de novo</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var CHAVE = "guia-s22";
+  var ticks = Array.prototype.slice.call(document.querySelectorAll(".tick"));
+  var secoes = Array.prototype.slice.call(document.querySelectorAll(".dia"));
+  var total = ticks.length;
+
+  var elPct    = document.getElementById("pct");
+  var elCont   = document.getElementById("cont");
+  var elFrase  = document.getElementById("frase");
+  var elFill   = document.getElementById("fill");
+  var elTrack  = document.getElementById("track");
+  var elDias   = document.getElementById("dias");
+  var elToasts = document.getElementById("toasts");
+  var festa    = document.getElementById("festa");
+
+  var suave = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ids estáveis: data-k (o mesmo id das versões anteriores, para manter o progresso) */
+  ticks.forEach(function(t, i){ t.dataset.id = t.dataset.k || ("t" + i); });
+
+  function ler(){
+    try{ return JSON.parse(localStorage.getItem(CHAVE)) || {}; }catch(e){ return {}; }
+  }
+  function salvar(){
+    var s = {};
+    ticks.forEach(function(t){ if(t.checked) s[t.dataset.id] = 1; });
+    try{ localStorage.setItem(CHAVE, JSON.stringify(s)); }catch(e){}
+  }
+  var salvo = ler();
+  ticks.forEach(function(t){ t.checked = !!salvo[t.dataset.id]; });
+
+  function aviso(titulo, texto){
+    var d = document.createElement("div");
+    d.className = "toast";
+    d.innerHTML = "<b></b><span></span>";
+    d.firstChild.textContent = titulo;
+    d.lastChild.textContent = texto;
+    elToasts.appendChild(d);
+    setTimeout(function(){
+      d.classList.add("sai");
+      setTimeout(function(){ d.remove(); }, 420);
+    }, 4200);
+  }
+
+  var cv = document.getElementById("confete");
+  var ctx = cv.getContext("2d");
+  var pecas = [], rodando = false, cores = ["#C46A85","#E2A2B5","#7A3A50","#D2798F","#FDF4F6","#A9556E"];
+  function dimensiona(){ cv.width = innerWidth; cv.height = innerHeight; }
+  dimensiona();
+  addEventListener("resize", dimensiona);
+
+  function solta(qtd){
+    if(suave) return;
+    for(var i=0;i<qtd;i++){
+      pecas.push({
+        x: Math.random()*cv.width,
+        y: -20 - Math.random()*cv.height*0.4,
+        w: 7 + Math.random()*8,
+        h: 9 + Math.random()*12,
+        vy: 2.2 + Math.random()*3.4,
+        vx: -1.4 + Math.random()*2.8,
+        rot: Math.random()*Math.PI,
+        vr: -0.14 + Math.random()*0.28,
+        cor: cores[(Math.random()*cores.length)|0]
+      });
+    }
+    if(!rodando){ rodando = true; requestAnimationFrame(anima); }
+  }
+  function anima(){
+    ctx.clearRect(0,0,cv.width,cv.height);
+    for(var i=pecas.length-1;i>=0;i--){
+      var p = pecas[i];
+      p.x += p.vx; p.y += p.vy; p.rot += p.vr; p.vy += 0.035;
+      if(p.y > cv.height + 40){ pecas.splice(i,1); continue; }
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot);
+      ctx.fillStyle = p.cor;
+      ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+      ctx.restore();
+    }
+    if(pecas.length){ requestAnimationFrame(anima); }
+    else { rodando = false; ctx.clearRect(0,0,cv.width,cv.height); }
+  }
+
+  function frase(p){
+    if(p === 0)   return "Semana 22 — bora começar";
+    if(p < 25)    return "Começou. Um passo de cada vez.";
+    if(p < 50)    return "Tá andando bem.";
+    if(p < 75)    return "Passou da metade!";
+    if(p < 100)   return "Reta final — quase lá.";
+    return "Semana fechada. Parabéns!";
+  }
+
+  var chips = secoes.map(function(sec){
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "chip";
+    b.addEventListener("click", function(){
+      sec.scrollIntoView({behavior: suave ? "auto" : "smooth", block: "start"});
+    });
+    elDias.appendChild(b);
+    return b;
+  });
+
+  var marcos = {};
+  var diasFechados = {};
+  var primeiraPintura = true;
+
+  function contaSec(sec){
+    var lista = sec.querySelectorAll(".tick"), f = 0;
+    Array.prototype.forEach.call(lista, function(t){ if(t.checked) f++; });
+    return [f, lista.length];
+  }
+
+  function pinta(){
+    var feitas = ticks.filter(function(t){ return t.checked; }).length;
+    var pct = total ? Math.round(feitas / total * 100) : 0;
+
+    elPct.textContent = pct;
+    elCont.textContent = feitas + " de " + total + " marcadas";
+    elFrase.textContent = frase(pct);
+    elFill.style.width = pct + "%";
+    elTrack.setAttribute("aria-valuenow", String(pct));
+
+    ticks.forEach(function(t){
+      var li = t.closest(".subs li");
+      var bloco = t.closest(".bloco");
+      if(li){ li.classList.toggle("feito", t.checked); }
+      else if(bloco){ bloco.classList.toggle("feito", t.checked); }
+    });
+    /* bloco só com subitens: risca o título quando todos estão marcados */
+    document.querySelectorAll(".bloco.sem-tick").forEach(function(b){
+      var ts = b.querySelectorAll(".subs .tick");
+      if(!ts.length) return;
+      var todos = Array.prototype.every.call(ts, function(t){ return t.checked; });
+      b.classList.toggle("completo", todos);
+    });
+
+    secoes.forEach(function(sec, i){
+      var c = contaSec(sec), f = c[0], n = c[1];
+      var p = n ? Math.round(f/n*100) : 0;
+      sec.querySelector(".dia-num").textContent = f + "/" + n;
+      sec.querySelector(".dia-track i").style.width = p + "%";
+      var completo = n > 0 && f === n;
+      sec.classList.toggle("fechado", completo);
+
+      var chip = chips[i];
+      chip.textContent = (sec.dataset.curto || sec.dataset.dia) + " " + f + "/" + n;
+      chip.classList.toggle("ok", completo);
+      chip.setAttribute("aria-label", sec.dataset.dia + ": " + f + " de " + n + " marcadas");
+
+      if(!primeiraPintura && completo && !diasFechados[i]){
+        diasFechados[i] = true;
+        if(pct < 100){
+          aviso(sec.dataset.dia + " fechado!", "Tudo marcado nessa parte. Pode passar para a próxima.");
+          solta(50);
+        }
+      }
+      if(!completo) diasFechados[i] = false;
+    });
+
+    if(!primeiraPintura){
+      [25,50,75].forEach(function(m){
+        if(pct >= m && !marcos[m]){
+          marcos[m] = true;
+          if(pct < 100){
+            aviso(m + "% da semana!", m === 50 ? "Metade vencida. Continua assim." : "Bom ritmo — segue.");
+            solta(40);
+          }
+        }
+      });
+      if(pct < 25) marcos[25] = false;
+      if(pct < 50) marcos[50] = false;
+      if(pct < 75) marcos[75] = false;
+
+      if(pct === 100 && !marcos[100]){
+        marcos[100] = true;
+        comemora(feitas);
+      }
+      if(pct < 100) marcos[100] = false;
+    } else {
+      if(pct >= 25) marcos[25] = true;
+      if(pct >= 50) marcos[50] = true;
+      if(pct >= 75) marcos[75] = true;
+      if(pct >= 100) marcos[100] = true;
+      secoes.forEach(function(sec, i){
+        var c = contaSec(sec);
+        diasFechados[i] = c[1] > 0 && c[0] === c[1];
+      });
+    }
+    primeiraPintura = false;
+  }
+
+  function comemora(feitas){
+    document.getElementById("festa-placar").textContent = feitas + " de " + total + " tarefas · " + secoes.length + " painéis · 1 semana inteira";
+    festa.classList.add("on");
+    document.getElementById("festa-ok").focus();
+    solta(180);
+    setTimeout(function(){ solta(120); }, 600);
+    setTimeout(function(){ solta(90); }, 1300);
+  }
+
+  ticks.forEach(function(t){
+    t.addEventListener("change", function(){ salvar(); pinta(); });
+  });
+
+  document.querySelectorAll(".bloco[data-tarefa]").forEach(function(bloco){
+    bloco.addEventListener("click", function(e){
+      if(e.target.closest("a, input, button, .subs, .prompt, table")) return;
+      var alvo = bloco.querySelector(":scope > .tick");
+      if(!alvo) return;
+      alvo.checked = !alvo.checked;
+      salvar();
+      pinta();
+    });
+  });
+
+  document.querySelectorAll(".subs li").forEach(function(li){
+    li.addEventListener("click", function(e){
+      if(e.target.closest("a, input")) return;
+      var alvo = li.querySelector(".tick");
+      if(!alvo) return;
+      alvo.checked = !alvo.checked;
+      salvar();
+      pinta();
+    });
+  });
+
+  /* copiar prompts */
+  document.querySelectorAll(".prompt .copiar").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var txt = btn.parentNode.querySelector("pre").textContent;
+      function ok(){ btn.textContent = "Copiado!"; setTimeout(function(){ btn.textContent = "Copiar"; }, 1600); }
+      function alt(){
+        var ta = document.createElement("textarea");
+        ta.value = txt; ta.style.position = "fixed"; ta.style.opacity = "0";
+        document.body.appendChild(ta); ta.select();
+        try{ document.execCommand("copy"); ok(); }catch(e){}
+        ta.remove();
+      }
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(txt).then(ok, alt);
+      } else { alt(); }
+    });
+  });
+
+  function zerar(){
+    if(!confirm("Desmarcar todas as tarefas da semana?")) return;
+    ticks.forEach(function(t){ t.checked = false; });
+    salvar();
+    primeiraPintura = true;
+    marcos = {};
+    diasFechados = {};
+    festa.classList.remove("on");
+    pinta();
+  }
+  document.getElementById("reset").addEventListener("click", zerar);
+  document.getElementById("festa-zerar").addEventListener("click", zerar);
+  document.getElementById("festa-ok").addEventListener("click", function(){ festa.classList.remove("on"); });
+  festa.addEventListener("click", function(e){ if(e.target === festa) festa.classList.remove("on"); });
+  document.addEventListener("keydown", function(e){ if(e.key === "Escape") festa.classList.remove("on"); });
+
+  pinta();
+})();
+</script>
+
+<script>
+(function(){
+  var links = Array.prototype.slice.call(document.querySelectorAll(".menu-links a"));
+  var secoes = links.map(function(a){ return document.querySelector(a.getAttribute("href")); });
+  function marca(){
+    var y = window.scrollY + 130, at = 0;
+    secoes.forEach(function(s, i){ if(s && s.offsetTop <= y) at = i; });
+    links.forEach(function(a, i){ a.classList.toggle("ativo", i === at); });
+  }
+  addEventListener("scroll", marca, {passive:true});
+  addEventListener("resize", marca);
+  marca();
+})();
+</script>
+</body>
+</html>
