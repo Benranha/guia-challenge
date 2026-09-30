@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guia da Semana 23</title>
+<style>
+:root{
+  --fundo:#FDF1F5; --card:#FFFFFF; --bloco:#FCE4EE; --tinta:#3A1F2B; --titulo:#7A2E52;
+  --acento:#D6457E; --acento2:#B03A6A; --suave:#8C6A78; --borda:rgba(176,58,106,.20);
+  --prompt:#3A1728; --prompt-tx:#FDEAF1; --sombra:rgba(122,46,82,.10); --brilho:#F59CC0;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --fundo:#1E1117; --card:#2A1820; --bloco:#36202A; --tinta:#F6E3EA; --titulo:#F8D3E1;
+    --acento:#F27AAB; --acento2:#F59CC0; --suave:#C9A2B3; --borda:rgba(245,156,192,.22);
+    --prompt:#140A0F; --prompt-tx:#F9E4EC; --sombra:rgba(0,0,0,.35); --brilho:#F59CC0;
+  }
+}
+:root[data-theme="dark"]{
+  --fundo:#1E1117; --card:#2A1820; --bloco:#36202A; --tinta:#F6E3EA; --titulo:#F8D3E1;
+  --acento:#F27AAB; --acento2:#F59CC0; --suave:#C9A2B3; --borda:rgba(245,156,192,.22);
+  --prompt:#140A0F; --prompt-tx:#F9E4EC; --sombra:rgba(0,0,0,.35); --brilho:#F59CC0;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--fundo);color:var(--tinta);font:16px/1.6 Georgia,"Times New Roman",serif}
+.wrap{max-width:880px;margin:0 auto;padding:0 16px 80px}
+nav{position:sticky;top:0;z-index:5;background:var(--fundo);border-bottom:1px solid var(--borda)}
+nav .in{max-width:880px;margin:0 auto;padding:10px 16px;display:flex;gap:14px;overflow-x:auto;white-space:nowrap;font:600 14px system-ui,sans-serif}
+nav a{color:var(--acento2);text-decoration:none}
+nav b{color:var(--titulo)}
+header{background:linear-gradient(135deg,#7A2E52,#B03A6A);color:#FDEAF1;border-radius:0 0 28px 28px;padding:40px 24px 30px;margin:0 -16px 24px}
+header p.k{font:600 12px system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;opacity:.75;margin:0}
+header h1{font-size:clamp(30px,6vw,46px);line-height:1.1;margin:6px 0 10px}
+header p{margin:0;max-width:60ch;opacity:.9}
+.prog{display:flex;align-items:center;gap:12px;margin-top:18px;font:600 14px system-ui,sans-serif}
+.bar{flex:1;height:10px;border-radius:9px;background:rgba(255,255,255,.2);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--brilho);transition:width .3s}
+section{background:var(--card);border:1px solid var(--borda);border-radius:22px;padding:22px 20px;margin:0 0 20px;box-shadow:0 6px 20px var(--sombra)}
+h2{color:var(--titulo);font-size:26px;margin:0 0 4px}
+h2 small{display:block;font:600 12px system-ui,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--acento)}
+h3{color:var(--acento2);font-size:18px;margin:22px 0 6px;padding-bottom:3px;border-bottom:2px solid var(--borda)}
+.regra{background:var(--bloco);border-left:4px solid var(--acento);border-radius:10px;padding:10px 14px;margin:10px 0}
+ul.check{list-style:none;padding:0;margin:8px 0}
+ul.check li{display:flex;gap:10px;align-items:flex-start;padding:6px 0;border-bottom:1px dashed var(--borda)}
+ul.check input{width:22px;height:22px;margin-top:2px;accent-color:var(--acento);flex:none;cursor:pointer}
+ul.check label{cursor:pointer}
+ul.check input:checked + label{color:var(--suave);text-decoration:line-through}
+.prompt{position:relative;background:var(--prompt);color:var(--prompt-tx);border-radius:14px;padding:14px 16px 14px;margin:10px 0;font:14px/1.55 ui-monospace,Menlo,Consolas,monospace;white-space:pre-wrap}
+.prompt .t{display:block;font:700 11px system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--brilho);margin-bottom:6px;padding-right:74px}
+.prompt button{position:absolute;top:10px;right:10px;font:600 12px system-ui,sans-serif;background:var(--brilho);color:#3A1728;border:0;border-radius:8px;padding:5px 10px;cursor:pointer}
+table{width:100%;border-collapse:collapse;font-size:14px;margin:8px 0}
+th,td{border:1px solid var(--borda);padding:5px 8px;text-align:left;vertical-align:top}
+th{background:var(--bloco);color:var(--titulo)}
+.scroll{overflow-x:auto}
+.nota{font-size:14px;color:var(--suave)}
+footer{text-align:center;font-size:13px;color:var(--suave)}
+.navprog{max-width:880px;margin:0 auto;padding:0 16px 10px;display:flex;align-items:center;gap:10px;font:700 13px system-ui,sans-serif;color:var(--acento2)}
+.navprog .bar{background:var(--bloco);height:12px}
+.bar i{background:linear-gradient(90deg,var(--acento),var(--brilho));box-shadow:0 0 10px var(--brilho)}
+.secprog{display:flex;align-items:center;gap:10px;margin:8px 0 4px;font:700 12px system-ui,sans-serif;color:var(--acento2)}
+.secprog .bar{background:var(--bloco);height:8px;max-width:260px}
+section.feita{border-color:var(--acento);box-shadow:0 0 0 3px rgba(214,69,126,.18),0 6px 20px var(--sombra)}
+section.feita h2::after{content:" \2713";color:var(--acento)}
+ul.check input:checked{animation:pop .35s ease}
+@keyframes pop{0%{transform:scale(1)}50%{transform:scale(1.35)}100%{transform:scale(1)}}
+#toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,40px);opacity:0;z-index:60;background:var(--titulo);color:var(--fundo);font:700 16px system-ui,sans-serif;padding:12px 20px;border-radius:999px;box-shadow:0 10px 30px var(--sombra);transition:all .35s cubic-bezier(.2,1.4,.4,1);pointer-events:none;max-width:calc(100% - 32px);text-align:center}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+#fx{position:fixed;inset:0;pointer-events:none;z-index:70;width:100%;height:100%}
+.balao{position:fixed;bottom:-140px;z-index:65;pointer-events:none;width:56px;height:70px;border-radius:50% 50% 48% 48%;animation:sobe linear forwards}
+.balao::before{content:"";position:absolute;left:50%;bottom:-6px;transform:translateX(-50%);border:6px solid transparent;border-top-color:var(--c)}
+.balao::after{content:"";position:absolute;left:50%;top:100%;width:1px;height:70px;background:rgba(120,60,90,.5)}
+.balao i{position:absolute;left:14px;top:12px;width:12px;height:20px;border-radius:50%;background:rgba(255,255,255,.45);transform:rotate(25deg)}
+@keyframes sobe{0%{transform:translate(0,0) rotate(-4deg)}25%{transform:translate(18px,-30vh) rotate(4deg)}50%{transform:translate(-14px,-60vh) rotate(-4deg)}75%{transform:translate(16px,-90vh) rotate(4deg)}100%{transform:translate(0,-130vh) rotate(0)}}
+#festa{position:fixed;inset:0;z-index:68;display:flex;align-items:center;justify-content:center;padding:16px;pointer-events:none;opacity:0;transition:opacity .3s}
+#festa.on{opacity:1}
+#festa div{background:var(--card);border:2px solid var(--acento);border-radius:24px;padding:22px 28px;text-align:center;box-shadow:0 20px 60px rgba(122,46,82,.35);transform:scale(.8);transition:transform .4s cubic-bezier(.2,1.5,.4,1)}
+#festa.on div{transform:scale(1)}
+#festa b{display:block;font-size:clamp(24px,5vw,34px);color:var(--titulo)}
+#festa span{font:600 15px system-ui,sans-serif;color:var(--acento2)}
+@media (prefers-reduced-motion:reduce){.balao{display:none}ul.check input:checked{animation:none}}
+@media print{
+  nav,.prompt button,.prog,.navprog,.secprog,#toast,#festa,#fx{display:none!important}
+  body{background:#fff;font-size:11pt}
+  header{border-radius:16px;margin:0 0 14px}
+  section{box-shadow:none;page-break-inside:auto;border-radius:14px}
+  .quebra{page-break-before:always}
+  .prompt{background:#FCE4EE;color:#3A1728;page-break-inside:avoid}
+  .prompt .t{color:#B03A6A}
+}
+</style>
+</head>
+<body>
+<nav><div class="in"><b>Semana 23</b>
+<a href="#como">Como usar</a><a href="#mat">Matemática</a><a href="#pesquisa">Pesquisa</a><a href="#latim">Latim</a><a href="#debate">Debate</a><a href="#exposicao">Exposição</a><a href="#raciocinio">Raciocínio</a><a href="#final">Checklist</a>
+</div>
+<div class="navprog"><div class="bar"><i id="fill2"></i></div><span id="pct2">0%</span></div></nav>
+
+<div class="wrap">
+<header>
+<p class="k">Classical Conversations · Challenge II</p>
+<h1>Guia para terminar a Semana 23</h1>
+<p>Progressões · Peixes e Anfíbios · O Pequeno Príncipe. Passo a passo de cada tarefa, com prompts para pedir ajuda à IA sem que ela faça o trabalho por você. Você pensa, escreve e decide; a IA pergunta, explica e corrige.</p>
+<div class="prog"><div class="bar"><i id="fill"></i></div><span id="pct">0%</span></div>
+</header>
+
+<section id="como">
+<h2><small>Antes de começar</small>Como usar este guia</h2>
+<ol>
+<li>Faça a tarefa na ordem dos passos e marque cada um.</li>
+<li>Travou? Copie o prompt da tarefa, cole na IA e complete o que está entre [colchetes].</li>
+<li>Se a IA começar a escrever a resposta por você, mande: <i>"Pare. Não responda por mim. Só me faça uma pergunta que me ajude a pensar."</i></li>
+<li>Tudo o que for entregue precisa estar com as suas palavras.</li>
+</ol>
+<div class="prompt"><span class="t">Prompt de abertura (cole uma vez no começo da conversa)</span><button>Copiar</button>Você vai ser meu tutor no estilo Classical Conversations Challenge II. Regras:
+1. Não faça minhas tarefas nem escreva textos prontos para mim.
+2. Me ajude com perguntas, dicas curtas e explicações de conceitos.
+3. Quando eu mostrar algo que escrevi, aponte o que está bom e no máximo 3 coisas para melhorar, sem reescrever.
+4. Se eu pedir a resposta pronta, lembre-me dessas regras e me dê só uma pista.
+Esta semana estudo: Progressões (PA e PG), Biologia (Peixes e Anfíbios), O Pequeno Príncipe, Catolicismo Romano de 1500 a 1700, o diálogo Mênon (70a a 75e, "O que é virtude?") e Latim (Lição 22 e prévia da Lição 23).</div>
+</section>
+
+<!-- MATEMÁTICA -->
+<section id="mat" class="quebra">
+<h2><small>Matemática · Seg, Ter, Qua e Qui</small>Progressões: PA e PG</h2>
+
+<h3>1. Segunda: aula online (8h) e tarefa da aula (13h)</h3>
+<ul class="check">
+<li><input type="checkbox" id="m1"><label for="m1">Assistir à aula levando pelo menos 1 exercício que não consegui resolver.</label></li>
+<li><input type="checkbox" id="m2"><label for="m2">Resolver os exercícios passados na aula (30 min), mostrando todos os cálculos.</label></li>
+<li><input type="checkbox" id="m3"><label for="m3">Anotar as dúvidas para conferir no Khan Academy.</label></li>
+</ul>
+
+<h3>2. Segunda e terça: Dante, PG (p. 303) e problemas de PA e PG (p. 319 a 322)</h3>
+<ul class="check">
+<li><input type="checkbox" id="m4"><label for="m4">Ler a parte de PG do Dante (p. 303) e copiar as fórmulas no caderno.</label></li>
+<li><input type="checkbox" id="m5"><label for="m5">Fazer os exercícios de PG mostrando cada passo.</label></li>
+<li><input type="checkbox" id="m6"><label for="m6">Terça: problemas de PA e PG (p. 319 a 322). Antes de calcular, escrever qual é a PA ou a PG do problema (a1, razão, n).</label></li>
+</ul>
+<div class="regra"><b>Para copiar:</b> <b>PA</b>: aₙ = a₁ + (n − 1)·r · Sₙ = (a₁ + aₙ)·n / 2. <b>PG</b>: aₙ = a₁·qⁿ⁻¹ · Sₙ = a₁(qⁿ − 1)/(q − 1) · soma infinita (|q| &lt; 1) = a₁/(1 − q). Como saber qual é: se o que se repete é <i>somar</i> o mesmo valor, é PA; se é <i>multiplicar</i> pelo mesmo valor, é PG.</div>
+<div class="prompt"><span class="t">Prompt: entender PG antes de calcular</span><button>Copiar</button>Estou estudando Progressão Geométrica. Use Definição, Comparação (com a PA) e Exemplo comigo, mas não resolva meus exercícios. Me faça uma pergunta de cada vez sobre o que é a razão q e como achar o termo aₙ. Eu respondo com as minhas palavras.</div>
+<div class="prompt"><span class="t">Prompt: travei num exercício</span><button>Copiar</button>Estou resolvendo este exercício de [PA / PG]: [cole o enunciado]
+Minha tentativa até aqui: [escreva os passos que fez]
+Não resolva. Me diga em qual passo está o erro (ou qual fórmula devo usar) e me faça uma pergunta que me leve ao próximo passo.</div>
+<div class="prompt"><span class="t">Prompt: PA ou PG?</span><button>Copiar</button>Vou colar um problema de texto. Não resolva. Me ajude a decidir se ele é PA ou PG fazendo perguntas: o que se repete? Somo ou multiplico? Quem é a1, quem é a razão, quanto vale n?
+[cole o problema]</div>
+
+<h3>3. Quarta e quinta: desafios, ENEM e revisão</h3>
+<ul class="check">
+<li><input type="checkbox" id="m7"><label for="m7">Quarta: resolver os desafios e as questões estilo ENEM do Dante. Antes de calcular, sublinhar o que o enunciado pede.</label></li>
+<li><input type="checkbox" id="m8"><label for="m8">Quinta: revisão sem olhar o caderno. Tentar, depois comparar. O erro é onde se aprende.</label></li>
+<li><input type="checkbox" id="m9"><label for="m9">Resolver as questões pendentes e ver o que ficou de dúvida no Khan Academy ou no Giz com Gis.</label></li>
+</ul>
+<div class="prompt"><span class="t">Prompt: corrigir meu erro</span><button>Copiar</button>Resolvi esta questão e o gabarito não bate. Enunciado: [cole]. Minha resolução: [cole]. Gabarito: [valor].
+Não refaça a conta. Me aponte em qual linha está o problema e me diga que tipo de erro foi (fórmula, conta, interpretação) para eu corrigir sozinha.</div>
+<p class="nota">Links: <a href="https://pt.khanacademy.org/math/algebra">Khan Academy</a> · <a href="https://www.youtube.com/@gizcongis">Giz com Gis</a> · <a href="https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/enem/provas-e-gabaritos">ENEM, provas anteriores</a></p>
+</section>
+
+<!-- PESQUISA -->
+<section id="pesquisa" class="quebra">
+<h2><small>Pesquisa · Ter, Qua e Qui</small>Biologia: Peixes e Anfíbios</h2>
+
+<h3>1. Vocabulário (terça)</h3>
+<ul class="check">
+<li><input type="checkbox" id="p1"><label for="p1">Escrever no caderno uma definição com as suas palavras para: Chondrichthyes, Osteichthyes, osso, cartilagem, bexiga natatória, guelras, pulmões, linha lateral, nadadeira dorsal, nadadeira ventral, anfíbio, hibernar, glândulas de veneno, veneno.</label></li>
+<li><input type="checkbox" id="p2"><label for="p2">Usar pelo menos 2 fontes confiáveis (livro de biologia, Britannica, site de universidade). Anotar autor, título e site de cada uma.</label></li>
+<li><input type="checkbox" id="p3"><label for="p3">Ler com atenção o experimento designado e anotar a hipótese e o procedimento (serão discutidos na comunidade).</label></li>
+</ul>
+<div class="regra"><b>Dicas para não confundir:</b> os dois primeiros termos são grupos de peixes e a diferença está no material do esqueleto (osso ou cartilagem). Peixe respira com guelras; anfíbio muda de forma de respirar ao longo da vida (pesquise como). Veneno é o que a glândula produz; o que muda entre animais venenosos e peçonhentos vale uma pesquisa.</div>
+<div class="prompt"><span class="t">Prompt: conferir minhas definições</span><button>Copiar</button>Escrevi estas definições de Peixes e Anfíbios com as minhas palavras. Não reescreva. Para cada uma, diga só "correta", "incompleta" ou "errada" e, se não estiver correta, me faça uma pergunta que me leve a corrigir sozinha:
+[cole suas definições]</div>
+<div class="prompt"><span class="t">Prompt: a fonte é confiável?</span><button>Copiar</button>Use o teste PAAC (Propósito, Autoridade, Precisão, Atualidade) comigo. Não avalie por mim: me faça uma pergunta de cada vez sobre esta fonte e, no fim, eu decido se ela é confiável.
+Fonte: [cole o link ou título]</div>
+<div class="prompt"><span class="t">Prompt: entender o experimento</span><button>Copiar</button>Vou descrever o experimento designado: [descreva]. Não me diga se a hipótese está certa. Me pergunte: qual é a variável que eu mudo, qual eu meço e o que fica igual? Depois me peça para escrever a hipótese com as minhas palavras.</div>
+
+<h3>2. Apêndice e Big Data Project (quarta)</h3>
+<ul class="check">
+<li><input type="checkbox" id="p4"><label for="p4">Responder as perguntas de pesquisa do apêndice usando o vocabulário.</label></li>
+<li><input type="checkbox" id="p5"><label for="p5">Continuar o registro do Big Data Project e fazer esboços no diário da natureza.</label></li>
+</ul>
+<div class="prompt"><span class="t">Prompt: travei numa pergunta do apêndice</span><button>Copiar</button>Estou respondendo o apêndice de Peixes e Anfíbios. A pergunta é: [cole a pergunta]
+Minha tentativa: [escreva o que pensou, mesmo que incompleto]
+Não me dê a resposta. Me diga qual termo do vocabulário devo revisar e me faça uma pergunta que me leve até a resposta.</div>
+
+<h3>3. Ensaio de 500 palavras (quinta)</h3>
+<ul class="check">
+<li><input type="checkbox" id="p6"><label for="p6">Escolher o tópico e pensar o tema com os Cinco Tópicos: Definição, Comparação, Relação, Circunstância, Testemunho.</label></li>
+<li><input type="checkbox" id="p7"><label for="p7">Introdução: apresentar o tópico.</label></li>
+<li><input type="checkbox" id="p8"><label for="p8">Desenvolvimento: descrever o fenômeno ou conceito com detalhes técnicos, usando o vocabulário da semana.</label></li>
+<li><input type="checkbox" id="p9"><label for="p9">Conclusão: qual o papel da ética ou da mordomia cristã aqui? O que devemos fazer, parar de fazer, continuar fazendo ou mudar?</label></li>
+<li><input type="checkbox" id="p10"><label for="p10">Checklist: 450 a 550 palavras · 3 ou mais termos técnicos da semana · fontes citadas · releu em voz alta.</label></li>
+</ul>
+<div class="prompt"><span class="t">Prompt: montar o esboço</span><button>Copiar</button>Vou escrever um ensaio de 500 palavras sobre [seu tópico de Peixes e Anfíbios]. Use os Cinco Tópicos de Invenção comigo: me faça 2 perguntas de cada tópico (Definição, Comparação, Relação, Circunstância, Testemunho). Eu respondo e depois organizo o esboço sozinha. Não escreva parágrafos.</div>
+<div class="prompt"><span class="t">Prompt: revisar o ensaio</span><button>Copiar</button>Terminei meu ensaio. Não reescreva nenhuma frase. Confira e me responda em lista:
+1. Tem entre 450 e 550 palavras?
+2. Quais termos técnicos da semana usei, e algum está usado errado?
+3. A introdução apresenta o tópico?
+4. A conclusão fala de ética ou mordomia cristã e diz o que fazer, parar, continuar ou mudar?
+5. Até 3 sugestões do que eu mesma devo melhorar.
+[cole o ensaio]</div>
+<div class="prompt"><span class="t">Prompt: citar as fontes em MLA</span><button>Copiar</button>Me ensine o formato MLA para este tipo de fonte: [livro / site / artigo]. Mostre o modelo com lugares vazios (Autor. Título. ...), não a citação pronta. Depois confiro a minha: [cole sua citação].</div>
+</section>
+
+<!-- LATIM -->
+<section id="latim" class="quebra">
+<h2><small>Latim II · Seg, Ter, Qua e Qui</small>Lição 22 e prévia da Lição 23</h2>
+
+<h3>Regras para copiar no caderno</h3>
+<div class="regra"><b>Lição 22, presente passivo:</b> -ō → -or · -s → -ris · -t → -tur · -mus → -mur · -tis → -minī · -nt → -ntur. Na 3ª conjugação a 2ª pessoa do singular é -eris (regeris). 3ª -iō e 4ª mantêm o i antes de -ō, -unt, -untur.</div>
+<div class="regra"><b>Ablativo de agente:</b> pessoa que faz a ação de um verbo passivo = ā/ab + ablativo. Coisa (instrumento) = ablativo sem preposição.</div>
+<div class="regra"><b>Prévia da Lição 23:</b> imperfeito e futuro, ativo e passivo, em todas as conjugações. Só a prévia: ler, montar as tabelas e reparar no padrão. Imperfeito: sinal <i>-bā-</i> antes da terminação. Futuro da 1ª/2ª: sinal <i>-bi-</i>. Futuro da 3ª/4ª: vogal <i>-e-</i> (e <i>-am</i> na 1ª pessoa).</div>
+<div class="regra"><b>Parse:</b> forma base → declinação/conjugação → caso/tempo → gênero/pessoa → número → função na frase.</div>
+
+<h3>Tarefas</h3>
+<ul class="check">
+<li><input type="checkbox" id="l1"><label for="l1">Seg: ler em voz alta as linhas designadas da Vulgata; flashcards do vocabulário novo; copiar as regras.</label></li>
+<li><input type="checkbox" id="l2"><label for="l2">Seg: meta diária Tour 4, ler / copiar / traduzir de 1 a 15 versículos.</label></li>
+<li><input type="checkbox" id="l3"><label for="l3">Ter: drill de flashcards e traduzir os versículos designados. Checar: faz sentido pela gramática? Em português? No contexto?</label></li>
+<li><input type="checkbox" id="l4"><label for="l4">Qua: ler em voz alta as linhas da próxima lição e trabalhar a prévia (imperfeito e futuro, ativo/passivo, todas as conjugações).</label></li>
+<li><input type="checkbox" id="l5"><label for="l5">Qui: drill completo dos flashcards da próxima lição e tabelas de imperfeito e futuro, ativo e passivo.</label></li>
+<li><input type="checkbox" id="l6"><label for="l6">Qui: parse completo de 3 a 5 versículos; traduzir primeiro sem ajuda e depois comparar.</label></li>
+</ul>
+
+<h3>Tabela para preencher (imperfeito ativo e passivo)</h3>
+<div class="scroll"><table>
+<tr><th></th><th>amābam</th><th>monēbam</th><th>regēbam</th><th>capiēbam</th><th>audiēbam</th></tr>
+<tr><td>1ª sg ativo</td><td>amābam</td><td></td><td></td><td></td><td></td></tr>
+<tr><td>3ª sg ativo</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>3ª pl ativo</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>1ª sg passivo</td><td>amābar</td><td></td><td></td><td></td><td></td></tr>
+<tr><td>3ª sg passivo</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>3ª pl passivo</td><td></td><td></td><td></td><td></td><td></td></tr>
+</table></div>
+<p class="nota">Faça a mesma tabela para o futuro (ativo e passivo) antes de conferir.</p>
+
+<div class="prompt"><span class="t">Prompt: tomar meus flashcards</span><button>Copiar</button>Seja meu tomador de flashcards de latim. Vocabulário: [cole a lista]. Mostre uma palavra latina por vez, espere minha resposta (significado + partes principais), diga se acertei e só então passe para a próxima. No fim, liste as que errei.</div>
+<div class="prompt"><span class="t">Prompt: conferir meu parse</span><button>Copiar</button>Fiz o parse deste versículo: [cole o versículo]
+Meu parse: [palavra: forma base, conjugação/declinação, caso/tempo, gênero/pessoa, número, função]
+Não faça o parse por mim. Diga só quais itens estão errados e me dê uma pista de gramática para cada um.</div>
+<div class="prompt"><span class="t">Prompt: minha tradução faz sentido?</span><button>Copiar</button>Traduzi este versículo sozinha: [latim] → [minha tradução]. Não me dê a tradução. Me ajude a checar: 1) faz sentido pelas regras do latim? 2) faz sentido em português? 3) faz sentido no contexto? Aponte a palavra que preciso rever.</div>
+<div class="prompt"><span class="t">Prompt: descobrir o padrão do imperfeito e do futuro</span><button>Copiar</button>Estou vendo a prévia do imperfeito e do futuro em latim. Não me dê as tabelas. Me mostre 3 formas prontas de amō e me pergunte o que eu noto de igual entre elas. Depois me peça para prever as formas de moneō e eu confiro.</div>
+<p class="nota">Links: <a href="https://www.sacred-texts.com/bib/vul/index.htm">Vulgata online</a> · <a href="https://www.bibliacatolica.com.br/vulgata-latina/">Vulgata comparada</a> · <a href="https://www.perseus.tufts.edu/hopper/text?doc=Perseus:text:1999.04.0059">Perseus (dicionário)</a></p>
+</section>
+
+<!-- DEBATE -->
+<section id="debate" class="quebra">
+<h2><small>Debate · Seg e Qua</small>Catolicismo Romano, 1500 a 1700</h2>
+
+<h3>1. Ler e anotar quem, o quê, quando, onde, por quê (segunda)</h3>
+<ul class="check">
+<li><input type="checkbox" id="d1"><label for="d1">Papa Leão X e a Reforma Protestante</label></li>
+<li><input type="checkbox" id="d2"><label for="d2">Contrarreforma e Concílio de Trento</label></li>
+<li><input type="checkbox" id="d3"><label for="d3">Inácio de Loyola e os Jesuítas</label></li>
+<li><input type="checkbox" id="d4"><label for="d4">Papa Urbano VIII e Galileu</label></li>
+</ul>
+<div class="scroll"><table>
+<tr><th>Tópico</th><th>Pistas para pesquisar (não é a resposta)</th></tr>
+<tr><td>Leão X</td><td>De que família ele veio? Para que a Igreja vendia indulgências? O que Lutero escreveu e em que ano?</td></tr>
+<tr><td>Trento</td><td>Por que a Igreja convocou um concílio? Quanto tempo durou? O que ele reafirmou e o que reformou?</td></tr>
+<tr><td>Loyola e jesuítas</td><td>Que experiência mudou a vida de Inácio? Em que ano a ordem foi aprovada? Quais os três campos de trabalho dos jesuítas (ensino, missões...)?</td></tr>
+<tr><td>Urbano VIII e Galileu</td><td>Qual foi a acusação? Em que ano foi o julgamento? O que estava em disputa: a ciência ou a interpretação da Bíblia?</td></tr>
+</table></div>
+<div class="prompt"><span class="t">Prompt: organizar a pesquisa</span><button>Copiar</button>Estou pesquisando "[tópico]" para responder quem, o quê, quando, onde e por quê. Não escreva o texto. Me indique 2 fontes confiáveis para pesquisar e me faça uma pergunta para cada uma das 5 perguntas-guia.</div>
+
+<h3>2. Encômio #5 (durante a semana)</h3>
+<ul class="check">
+<li><input type="checkbox" id="d5"><label for="d5">Completar o roteiro do Encômio #5 adicionando a <b>Refutatio</b> (a parte em que você responde ao que poderiam objetar contra a pessoa elogiada).</label></li>
+</ul>
+<div class="prompt"><span class="t">Prompt: entender a Refutatio</span><button>Copiar</button>Estou fazendo o Encômio #5 sobre [figura] e preciso acrescentar a Refutatio. Não escreva. Me explique com um exemplo curto (de outra pessoa) o que é uma Refutatio e me pergunte: que críticas alguém poderia fazer a esta figura? Eu respondo e você diz só se a minha resposta rebate a crítica.</div>
+
+<h3>3. Parágrafo-resumo rápido (quarta)</h3>
+<ul class="check">
+<li><input type="checkbox" id="d6"><label for="d6">Escrever um parágrafo-resumo da leitura (quem, o quê, quando, onde, por quê) mostrando a ligação entre os quatro tópicos.</label></li>
+</ul>
+<div class="prompt"><span class="t">Prompt: conferir meu parágrafo</span><button>Copiar</button>Escrevi este parágrafo sobre [tópico]. Não reescreva. Marque quais das 5 perguntas (quem, o quê, quando, onde, por quê) estão respondidas e quais faltam. Aponte se alguma data ou nome parece errado para eu conferir na fonte.
+[cole o parágrafo]</div>
+<div class="prompt"><span class="t">Prompt: ligar os tópicos</span><button>Copiar</button>Preciso de um parágrafo que una Leão X, Trento, os jesuítas e o caso Galileu. Não escreva. Me faça 3 perguntas que me ajudem a achar o que esses tópicos têm em comum.</div>
+</section>
+
+<!-- EXPOSIÇÃO -->
+<section id="exposicao" class="quebra">
+<h2><small>Exposição · Ter, Qua e Qui + leitura da noite</small>O Pequeno Príncipe</h2>
+
+<div class="regra"><b>Atenção ao cronograma:</b> o PDF da semana lista as leituras da tarde (caps. 1-9, 10-16, 17-27) e as leituras da noite (caps. 1-7, 8-14, 15-21, 22-27) com números diferentes, e o ensaio de quinta fala de <i>Nada de Novo no Front</i>, o livro da semana anterior. Siga as leituras da noite para não ficar para trás e <b>confirme com a tutora qual é o tema do ensaio desta semana</b> antes de escrever.</div>
+
+<h3>1. Leitura e anotações</h3>
+<div class="scroll"><table>
+<tr><th>Quando</th><th>Capítulos</th><th>O que anotar</th></tr>
+<tr><td>Seg noite</td><td>1 a 7</td><td>Como o narrador conhece o Pequeno Príncipe; o planeta e a rosa.</td></tr>
+<tr><td>Ter (tarde e noite)</td><td>1 a 9 e 8 a 14</td><td>Como ele trata os primeiros adultos: o rei, o vaidoso, o bêbado, o empresário, o acendedor de lampiões, o geógrafo.</td></tr>
+<tr><td>Qua (tarde e noite)</td><td>10 a 16 e 15 a 21</td><td>A chegada à Terra, a serpente, o jardim de rosas, a raposa e o significado de "cativar".</td></tr>
+<tr><td>Qui (tarde e noite)</td><td>17 a 27 e 22 a 27</td><td>O guarda-chaves, o vendedor, o poço, a serpente, a despedida e o epílogo.</td></tr>
+</table></div>
+<ul class="check">
+<li><input type="checkbox" id="e1"><label for="e1">Seg: ler caps. 1 a 7.</label></li>
+<li><input type="checkbox" id="e2"><label for="e2">Ter: ler caps. 8 a 14 e anotar como o Pequeno Príncipe interage com cada adulto.</label></li>
+<li><input type="checkbox" id="e3"><label for="e3">Qua: ler caps. 15 a 21 e anotar a última fala do Príncipe em cada planeta.</label></li>
+<li><input type="checkbox" id="e4"><label for="e4">Qui: terminar o livro (caps. 22 a 27).</label></li>
+<li><input type="checkbox" id="e5"><label for="e5">Cada anotação com o número do capítulo (ou da página). Uma sobre o que acontece, outra sobre o que o Príncipe sente ou pensa.</label></li>
+</ul>
+<div class="regra"><b>Dica:</b> repare na última fala do Pequeno Príncipe em cada planeta. Cada uma resume o que ele achou daquele adulto.</div>
+<div class="prompt"><span class="t">Prompt: entender um capítulo sem resumo pronto</span><button>Copiar</button>Li os capítulos [números] de O Pequeno Príncipe. Não me dê resumo. Primeiro eu conto o que entendi, depois você me faz 3 perguntas sobre o que eu posso ter deixado passar.
+O que eu entendi: [escreva]</div>
+<div class="prompt"><span class="t">Prompt: o que cada adulto representa</span><button>Copiar</button>Estou lendo os planetas do Pequeno Príncipe. Não me diga o que cada adulto simboliza. Escolho um: [rei / vaidoso / bêbado / empresário / acendedor / geógrafo]. Me pergunte o que ele faz, o que quer e o que a última fala do Príncipe diz sobre ele, e me ajude a chegar sozinha a uma ideia.</div>
+<div class="prompt"><span class="t">Prompt: entender "cativar"</span><button>Copiar</button>Li o encontro do Príncipe com a raposa. Não explique a palavra "cativar". Me faça perguntas, uma de cada vez, sobre o que a raposa pede que ele faça e o que muda depois, e eu tento definir com as minhas palavras.</div>
+
+<h3>2. Ensaio expositivo (quinta)</h3>
+<ul class="check">
+<li><input type="checkbox" id="e6"><label for="e6">Confirmar com a tutora o tema do ensaio desta semana (o PDF ainda cita o livro anterior).</label></li>
+<li><input type="checkbox" id="e7"><label for="e7">Tese em uma frase.</label></li>
+<li><input type="checkbox" id="e8"><label for="e8">Parágrafos de desenvolvimento, cada um com uma cena do livro como prova (capítulo citado).</label></li>
+<li><input type="checkbox" id="e9"><label for="e9">Conclusão que volta para a tese. Releu em voz alta.</label></li>
+</ul>
+<div class="prompt"><span class="t">Prompt: testar minha tese</span><button>Copiar</button>Minha tese para o ensaio de O Pequeno Príncipe é: [escreva]. Não escreva outra. Faça o papel de um leitor que discorda e me dê 2 objeções para eu responder.</div>
+<div class="prompt"><span class="t">Prompt: revisar o ensaio</span><button>Copiar</button>Revise meu ensaio sem reescrever frases. Diga: 1) a tese está clara? 2) cada parágrafo tem uma cena do livro como prova? 3) a conclusão volta para a tese? 4) até 3 coisas que eu devo melhorar.
+[cole o ensaio]</div>
+</section>
+
+<!-- RACIOCÍNIO -->
+<section id="raciocinio">
+<h2><small>Raciocínio · Ter e Qui</small>Diálogo socrático: O que é virtude?</h2>
+<ul class="check">
+<li><input type="checkbox" id="r1"><label for="r1">Ler Mênon 70a a 75e (na comunidade, para discutir).</label></li>
+<li><input type="checkbox" id="r2"><label for="r2">Considerar e escrever a minha própria resposta: O que é virtude?</label></li>
+<li><input type="checkbox" id="r3"><label for="r3">Reler a resposta e ver se um exemplo de "virtude" que me ocorre contradiz a minha definição.</label></li>
+</ul>
+<div class="regra"><b>Pergunta para pensar:</b> em 70a a 75e, Mênon dá várias respostas e Sócrates diz que só recebeu "um enxame". O que Sócrates quer dizer com isso? Uma boa definição precisa valer para <i>todos</i> os casos.</div>
+<div class="prompt"><span class="t">Prompt: praticar como Sócrates</span><button>Copiar</button>Faça o papel de Sócrates no diálogo Mênon. Eu vou dizer o que acho que é virtude e você me responde só com perguntas, uma de cada vez, mostrando as falhas da minha definição. Não diga a resposta certa. Minha definição: [escreva]</div>
+</section>
+
+<!-- CHECKLIST -->
+<section id="final">
+<h2><small>Quinta, 17:45</small>Checklist final</h2>
+<ul class="check">
+<li><input type="checkbox" id="f1"><label for="f1">Matemática: PG e problemas de PA e PG, exercícios feitos</label></li>
+<li><input type="checkbox" id="f2"><label for="f2">Latim: Lição 22 com flashcards e tabelas em dia; prévia da Lição 23 feita</label></li>
+<li><input type="checkbox" id="f3"><label for="f3">Pesquisa: vocabulário, apêndice, Big Data Project e ensaio de 500 palavras</label></li>
+<li><input type="checkbox" id="f4"><label for="f4">Exposição: O Pequeno Príncipe lido e anotado, ensaio escrito</label></li>
+<li><input type="checkbox" id="f5"><label for="f5">Debate: parágrafo-resumo e Encômio #5 com a Refutatio</label></li>
+<li><input type="checkbox" id="f6"><label for="f6">Raciocínio: resposta da semana escrita</label></li>
+<li><input type="checkbox" id="f7"><label for="f7">Tudo com as minhas palavras e relido em voz alta</label></li>
+</ul>
+</section>
+
+<div id="toast" role="status" aria-live="polite"></div>
+<canvas id="fx"></canvas>
+<div id="festa" aria-live="polite"><div><b id="festa-t"></b><span id="festa-s"></span></div></div>
+<footer>Semana 23 · Challenge II</footer>
+</div>
+
+<script>
+(function(){
+  var KEY='guia-s23';
+  var boxes=[].slice.call(document.querySelectorAll('ul.check input'));
+  var st={};
+  try{ st=JSON.parse(localStorage.getItem(KEY)||'{}'); }catch(e){ st={}; }
+  var NOMES={mat:'Matemática',pesquisa:'Pesquisa',latim:'Latim',debate:'Debate',exposicao:'Exposição',raciocinio:'Raciocínio',final:'Checklist final'};
+  var ELOGIOS=['Muito bem!','Você está indo muito bem!','Você sabe fazer isso!','Arrasou!','Mandou bem demais!','Mais uma! Continua assim!','Que capricho!','Orgulho de você!','Tá voando!','Isso aí, uma de cada vez!','Very nice!','You’re doing great!'];
+  var ultimo=-1;
+  var secoes=[].slice.call(document.querySelectorAll('section')).filter(function(s){return s.querySelector('ul.check')});
+  secoes.forEach(function(s){
+    var d=document.createElement('div'); d.className='secprog';
+    d.innerHTML='<div class="bar"><i></i></div><span></span>';
+    s.querySelector('h2').insertAdjacentElement('afterend',d);
+  });
+  function contar(el){var b=[].slice.call(el.querySelectorAll('ul.check input'));return [b.filter(function(x){return x.checked}).length,b.length];}
+  function upd(){
+    var n=boxes.filter(function(b){return b.checked}).length;
+    var p=Math.round(n/boxes.length*100);
+    ['fill','fill2'].forEach(function(id){document.getElementById(id).style.width=p+'%';});
+    document.getElementById('pct').textContent=p+'% ('+n+' de '+boxes.length+')';
+    document.getElementById('pct2').textContent=p+'%';
+    secoes.forEach(function(s){
+      var c=contar(s), sp=s.querySelector('.secprog');
+      sp.querySelector('i').style.width=Math.round(c[0]/c[1]*100)+'%';
+      sp.querySelector('span').textContent=c[0]+' de '+c[1];
+      s.classList.toggle('feita',c[0]===c[1]);
+    });
+    return p;
+  }
+  var tt;
+  function toast(msg){
+    var t=document.getElementById('toast'); t.textContent=msg; t.classList.add('on');
+    clearTimeout(tt); tt=setTimeout(function(){t.classList.remove('on')},1800);
+  }
+  function elogio(){
+    var i; do{ i=Math.floor(Math.random()*ELOGIOS.length); }while(i===ultimo && ELOGIOS.length>1);
+    ultimo=i; return ELOGIOS[i];
+  }
+  var cv=document.getElementById('fx'), ctx=cv.getContext('2d'), parts=[], rodando=false;
+  function tam(){cv.width=innerWidth*devicePixelRatio;cv.height=innerHeight*devicePixelRatio;}
+  tam(); addEventListener('resize',tam);
+  var CORES=['#F59CC0','#D6457E','#FFD1E3','#FFFFFF','#F7C948','#E8A0FF','#FF7AA8'];
+  function glitter(qtd){
+    var W=cv.width,H=cv.height,dp=devicePixelRatio;
+    for(var i=0;i<qtd;i++){
+      var lado=i%2;
+      parts.push({x:lado?W*.1:W*.9,y:H*.75,vx:(lado?1:-1)*(Math.random()*9+3)*dp,vy:-(Math.random()*14+8)*dp,
+        g:.32*dp,s:(Math.random()*5+2)*dp,c:CORES[i%CORES.length],r:Math.random()*6,vr:Math.random()*.3-.15,
+        vida:0,max:120+Math.random()*80,forma:Math.random()<.35?'estrela':(Math.random()<.5?'q':'c')});
+    }
+    if(!rodando){rodando=true;requestAnimationFrame(anima);}
+  }
+  function estrela(x,y,s){ctx.beginPath();for(var k=0;k<8;k++){var a=k*Math.PI/4,rr=k%2?s*.4:s*1.4;ctx.lineTo(x+Math.cos(a)*rr,y+Math.sin(a)*rr);}ctx.closePath();ctx.fill();}
+  function anima(){
+    ctx.clearRect(0,0,cv.width,cv.height);
+    parts=parts.filter(function(p){return p.vida<p.max});
+    parts.forEach(function(p){
+      p.vida++; p.vx*=.985; p.vy+=p.g; p.x+=p.vx; p.y+=p.vy; p.r+=p.vr;
+      ctx.globalAlpha=Math.max(0,1-p.vida/p.max)*(.6+.4*Math.abs(Math.sin(p.vida*.3)));
+      ctx.fillStyle=p.c; ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.r);
+      if(p.forma==='estrela') estrela(0,0,p.s);
+      else if(p.forma==='q') ctx.fillRect(-p.s,-p.s/2,p.s*2,p.s);
+      else {ctx.beginPath();ctx.arc(0,0,p.s*.7,0,7);ctx.fill();}
+      ctx.restore();
+    });
+    ctx.globalAlpha=1;
+    if(parts.length) requestAnimationFrame(anima); else {rodando=false;ctx.clearRect(0,0,cv.width,cv.height);}
+  }
+  function baloes(qtd){
+    var BC=['#F59CC0','#D6457E','#FFB3CF','#E8A0FF','#FF7AA8','#F7C948'];
+    for(var i=0;i<qtd;i++){
+      var b=document.createElement('div'); b.className='balao';
+      var c=BC[i%BC.length]; b.style.background=c; b.style.setProperty('--c',c);
+      b.style.left=(Math.random()*90+2)+'vw';
+      var dur=5+Math.random()*3; b.style.animationDuration=dur+'s';
+      b.style.animationDelay=(Math.random()*.8)+'s';
+      b.innerHTML='<i></i>';
+      document.body.appendChild(b);
+      setTimeout(function(el){return function(){el.remove()}}(b),(dur+1)*1000);
+    }
+  }
+  var ft;
+  function festa(titulo,sub,grande){
+    var f=document.getElementById('festa'); document.getElementById('toast').classList.remove('on');
+    document.getElementById('festa-t').textContent=titulo;
+    document.getElementById('festa-s').textContent=sub;
+    f.classList.add('on'); clearTimeout(ft); ft=setTimeout(function(){f.classList.remove('on')},grande?4200:2800);
+    var reduz=matchMedia('(prefers-reduced-motion: reduce)').matches;
+    glitter(reduz?40:(grande?260:160));
+    if(!reduz){ baloes(grande?22:12); if(grande) setTimeout(function(){glitter(200)},900); }
+  }
+  boxes.forEach(function(b){
+    b.checked=!!st[b.id];
+    b.addEventListener('change',function(){
+      st[b.id]=b.checked;
+      try{ localStorage.setItem(KEY,JSON.stringify(st)); }catch(e){}
+      var antes=Math.round((boxes.filter(function(x){return x.checked}).length-(b.checked?1:-1))/boxes.length*100);
+      var p=upd();
+      if(!b.checked) return;
+      var sec=b.closest('section'), c=contar(sec);
+      if(p===100){ festa('Semana 23 completa!','Você terminou tudo. Que orgulho!',true); }
+      else if(c[0]===c[1]){ festa((NOMES[sec.id]||'Parte')+' completa!',elogio(),false); }
+      else if(antes<50 && p>=50){ toast('Metade da semana feita! '+elogio()); glitter(60); }
+      else { toast(elogio()); }
+    });
+  });
+  upd();
+  document.querySelectorAll('.prompt button').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var txt=btn.parentNode.cloneNode(true);
+      txt.querySelectorAll('button,.t').forEach(function(x){x.remove()});
+      var s=txt.textContent.trim();
+      function ok(){btn.textContent='Copiado!';setTimeout(function(){btn.textContent='Copiar'},1500);}
+      if(navigator.clipboard){ navigator.clipboard.writeText(s).then(ok,function(){}); }
+    });
+  });
+})();
+</script>
+</body>
+</html>
